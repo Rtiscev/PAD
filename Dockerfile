@@ -22,35 +22,6 @@ RUN echo "Проверка разрешений yt-dlp:" && ls -l /app/tools/yt-
 # Установите правильные разрешения, чтобы сделать yt-dlp исполняемым
 RUN chmod a+rx /app/tools/yt-dlp
 
-# Вставьте код на C# как комментарий
-# var ytDlpPath = "/app/tools/yt-dlp";
-# string ytDlpPath = "tools/yt-dlp";
-#
-# // Это получит текущую рабочую директорию (т.е. \bin\Debug)
-# string workingDirectory = Environment.CurrentDirectory;
-# string conc = Path.Combine(workingDirectory, ytDlpPath);
-#
-# // Создайте новый процесс для запуска yt-dlp
-# Process process = new Process();
-# process.StartInfo.FileName = ytDlpPath;
-#
-# // Аргументы для передачи yt-dlp (в данном случае, URL видео)
-# process.StartInfo.Arguments = videoUrl;
-#
-# // Перенаправьте стандартный вывод и ошибки, чтобы вы могли захватить вывод
-# process.StartInfo.RedirectStandardOutput = true;
-# process.StartInfo.RedirectStandardError = true;
-#
-# // Запустите процесс
-# process.Start();
-#
-# // Прочитайте вывод от yt-dlp
-# string output = process.StandardOutput.ReadToEnd();
-# string error = process.StandardError.ReadToEnd();
-#
-# // Подождите, пока процесс завершится
-# process.WaitForExit();
-
 # Скопируйте JAR файл приложения в рабочую директорию
 COPY target/MS_YT_DLP-0.0.1-SNAPSHOT.jar /app/MS_YT_DLP-0.0.1-SNAPSHOT.jar
 
