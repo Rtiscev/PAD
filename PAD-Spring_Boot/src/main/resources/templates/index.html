@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка видео</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Загрузка видео с YouTube</h1>
+
+<form id="downloadForm">
+    <label for="videoUrl">Введите URL видео:</label>
+    <input type="text" id="videoUrl" name="videoUrl" placeholder="https://www.youtube.com/watch?v=example" required>
+    <button type="submit">Загрузить видео</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    document.getElementById('downloadForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Отменить стандартное поведение формы
+
+        const videoUrl = document.getElementById('videoUrl').value;
+        const resultDiv = document.getElementById('result');
+
+        // Отправка GET-запроса
+        fetch(`/api/download?videoUrl=${encodeURIComponent(videoUrl)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Сервер вернул ошибку: ' + response.status);
+                }
+                return response.text();
+            })
+            .then(data => {
+                resultDiv.textContent = data; // Отображение результата
+            })
+            .catch(error => {
+                resultDiv.textContent = 'Ошибка: ' + error.message;
+            });
+    });
+</script>
+
+</body>
+</html>

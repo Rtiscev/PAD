@@ -1,0 +1,18 @@
+﻿@using Front.Models;
+@model VideoMetadata;
+
+@if (Model is not null)
+{
+    <div>
+        <div class="imgContainer">
+            <img src="@Model.Thumbnail" />
+            <p>@Model.DurationString</p>
+        </div>
+        <p>@Model.CommentCount</p>
+        <p>@Model.LikeCount</p>
+        <p>@Model.Channel</p>
+        <p id="ModelTitle">@Model.Title </p>
+        <p>@Model.ViewCount</p>
+        <p>@Model.UploadDate</p>
+    </div>
+}

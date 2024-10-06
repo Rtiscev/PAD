@@ -1,0 +1,47 @@
+services:
+  front:
+    build: './Front'
+    ports:
+      - "59152:8080"
+      - "59153:8081"
+    # command: dotnet watch run --no-launch-profile  # Ensure the app is running with dotnet watch
+    # develop:
+    #   watch:
+    #     - action: rebuild
+    #       path: ./Front
+    #       target: /src
+    volumes:
+      - ./Front:/src  # Ensure this matches the source you want to mount
+
+  ytdlp:
+    image: yt_dlp:latest
+
+    # build: './PAD-Spring_Boot'
+    ports:
+      - "59162:8080"
+      # - "59163:8081"
+    # command: dotnet watch run --no-launch-profile  # Ensure the app is running with dotnet watch
+    # develop:
+      # watch:
+        # - action: rebuild
+          # path: ./ms_yt
+          # target: /src
+        
+
+    # command: dotnet watch run  # Enable hot-reloading
+  # webapi:
+  #   # image: myapp-webapi
+  #   build: "./web api sample"  # Path to your webapi project folder
+  #   ports:
+  #     - "32778:5000"  # Host port 8080 mapped to container port 8080
+  #     - "32779:5001"  # Host port 8080 mapped to container port 8080
+  #   environment:
+  #     - ASPNETCORE_HTTP_PORTS=5000
+  #     - ASPNETCORE_HTTPS_PORTS=5001
+  #     - DOTNET_RUNNING_IN_CONTAINER=true
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     #  - ASPNETCORE_URLS=https://+:443;http://+:80
+  #     - ASPNETCORE_Kestrel__Certificates__Default__Password=Latree
+  #     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+  #   volumes:
+  #     - ~/.aspnet/https:/https:ro

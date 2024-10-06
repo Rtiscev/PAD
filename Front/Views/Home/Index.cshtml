@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader & Converter</title>
+    <link rel="stylesheet" href="~/css/main.css">
+</head>
+
+<body>
+
+    <div class="headerDiv">
+        <h1 class="headerPage">YouTube Downloader & Converter</h1>
+        <div class="uiTypeDiv">
+            <p>Simple</p>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+            <p> Advanced</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="input-section">
+            <div class="ytLinkParentDiv">
+                <div class="ytLinkDiv">
+                    <img src="~/imgs/magn_glass3.svg" />
+                    <input type="text" id="youtube-url" placeholder="Paste video link here, like: https://www.youtube.com/watch?v=example" />
+                </div>
+                <button onclick="GetInformation()">&#9658;&#9658;</button>
+            </div>
+            <div class="ytData">
+                <partial name="_YoutubeData" model="@ViewBag.YTD" />
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h2 class="containerHs">Select download option:</h2>
+            <div class="radioButtonsDiv">
+                <div class="radio-group">
+                    <input type="radio" id="fileOption1" value="Video" name="fileGroup">
+                    <label for="fileOption1">Video</label>
+                </div>
+
+                <div class="radio-group">
+                    <input type="radio" id="fileOption2" value="Audio" name="fileGroup">
+                    <label for="fileOption2">Audio</label>
+                </div>
+
+                <div class="radio-group">
+                    <input type="radio" id="fileOption3" value="Video+Audio" name="fileGroup" checked>
+                    <label for="fileOption3">Video + Audio</label>
+                </div>
+            </div>
+
+            <button onclick="ListAllFormats()">List available formats</button>
+
+            <div class="quality-options">
+                <h3>Select Quality of available formats:</h3>
+                <div class="availableFormatsDiv">
+                    <partial name="_AvailableFormats" />
+                </div>
+            </div>
+
+            <button onclick="downloadFile()" class="btn" id="download-btn">Download video/audio/video+audio</button>
+        </div>
+    </div>
+
+    <h1>Made with</h1>
+    <div class="madeWithDiv">
+        <img src="~/imgs/ASP_Net_Core.png" />
+        <img src="~/imgs/docker.png" />
+        <img src="~/imgs/FFMPEG.png" />
+        <img src="~/imgs/yt_dlp.png" />
+    </div>
+
+    <script src="~/js/main.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</body>
+</html>
