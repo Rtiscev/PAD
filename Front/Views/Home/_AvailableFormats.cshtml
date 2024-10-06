@@ -1,0 +1,22 @@
+﻿@using Front.Models;
+
+@if (Model != null)
+{
+    <select name="options" id="quality">
+        @if (ViewBag.type == "Audio")
+        {
+            @foreach (var vd in Model)
+            {
+                <option value="@vd.Id">Extension: @vd.Ext TBR: @vd.TBR FileSize: @vd.FileSize </option>
+            }
+        }
+        else
+        {
+
+            @foreach (var vd in Model)
+            {
+                <option value="@vd.Id">Extension: @vd.Ext Resolution: @vd.Resolution FPS: @vd.Fps FileSize: @vd.FileSize </option>
+            }
+        }
+    </select>
+}

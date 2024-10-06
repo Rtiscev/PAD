@@ -1,0 +1,109 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Uni\\year4\\PAD\\Lab\\Front\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\wwwroot\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:wwwroot\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\views\\home\\_availableformats.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:views\\home\\_availableformats.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\models\\videodata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:models\\videodata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.css",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\main.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\main.css",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\main.css",
+              "RelativeToolTip": "wwwroot\\css\\main.css",
+              "ViewState": "AQIAAPkAAAAAAAAAAADwvwgBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-10-04T17:31:57.454Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "VideoData.cs",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Models\\VideoData.cs",
+              "RelativeDocumentMoniker": "Models\\VideoData.cs",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Models\\VideoData.cs",
+              "RelativeToolTip": "Models\\VideoData.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T09:10:33.114Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_AvailableFormats.cshtml",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\_AvailableFormats.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\_AvailableFormats.cshtml",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\_AvailableFormats.cshtml",
+              "RelativeToolTip": "Views\\Home\\_AvailableFormats.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-30T06:40:15.133Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABoAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-28T14:40:21.244Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
