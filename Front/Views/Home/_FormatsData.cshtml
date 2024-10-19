@@ -1,0 +1,47 @@
+﻿@using Front.Models;
+
+@{
+    int i = 0;
+}
+@if (Model is not null)
+{
+    <p>Choose format</p>
+    <div class="selectDiv">
+        <div class="select" tabindex="1">
+            @if (Model is IEnumerable<AudioData>)
+            {
+                @foreach (var audioformat in Model)
+                {
+                    var id = "opt" + audioformat.Id;
+
+                    if (i++ == 0)
+                    {
+                        <input class="selectopt" name="test" type="radio" id="@id" checked>
+                    }
+                    else
+                    {
+                        <input class="selectopt" name="test" type="radio" id="@id">
+                    }
+                    <label for="@id" class="option">@audioformat.Ext @audioformat.FileSize @audioformat.TBR</label>
+                }
+            }
+            else
+            {
+                @foreach (var videoFormat in Model)
+                {
+                    var id = "opt" + videoFormat.Id;
+
+                    if (i++ == 0)
+                    {
+                        <input class="selectopt" name="test" type="radio" id="@id" checked>
+                    }
+                    else
+                    {
+                        <input class="selectopt" name="test" type="radio" id="@id">
+                    }
+                    <label for="@id" class="option">@videoFormat.Ext @videoFormat.Resolution @videoFormat.Fps @videoFormat.FileSize</label>
+                }
+            }
+        </div>
+    </div>
+}
