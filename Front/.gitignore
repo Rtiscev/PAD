@@ -1,0 +1,53 @@
+# Build Folders
+bin/
+obj/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Scaffolding
+.scaffolding
+
+# Rider project files
+.idea/
+
+# Visual Studio Code settings
+.vscode/
+
+# NPM Packages
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Entity Framework migrations
+Migrations/
+
+# Publish outputs
+wwwroot/
+dist/
+
+# Package files
+*.nupkg
+*.snupkg
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+resharper*
+
+# StyleCop
+StyleCopReport.xml
+
+# Backup & dump files
+*.bak
+*.dmp
+
+# Others
+.DS_Store
+Thumbs.db

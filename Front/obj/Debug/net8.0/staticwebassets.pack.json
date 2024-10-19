@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\Front.bundle.scp.css"
     },
     {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\animations.css",
+      "PackagePath": "staticwebassets\\css\\animations.css"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\fonts.css",
+      "PackagePath": "staticwebassets\\css\\fonts.css"
+    },
+    {
       "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\main.css",
       "PackagePath": "staticwebassets\\css\\main.css"
     },
@@ -15,6 +23,82 @@
     {
       "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\CHASER.otf",
+      "PackagePath": "staticwebassets\\fonts\\CHASER.otf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\CryptoHunter-E44Rj.ttf",
+      "PackagePath": "staticwebassets\\fonts\\CryptoHunter-E44Rj.ttf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\FROZBITE.otf",
+      "PackagePath": "staticwebassets\\fonts\\FROZBITE.otf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\ForTheWorld-aYYmE.ttf",
+      "PackagePath": "staticwebassets\\fonts\\ForTheWorld-aYYmE.ttf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\Fresh Nieve.otf",
+      "PackagePath": "staticwebassets\\fonts\\Fresh Nieve.otf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\Inner Mounting Flame.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Inner Mounting Flame.ttf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\LaceNice.ttf",
+      "PackagePath": "staticwebassets\\fonts\\LaceNice.ttf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\MonstersHeart-Regular.otf",
+      "PackagePath": "staticwebassets\\fonts\\MonstersHeart-Regular.otf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\Onion Family Font.otf",
+      "PackagePath": "staticwebassets\\fonts\\Onion Family Font.otf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\RushDriver-Italic.otf",
+      "PackagePath": "staticwebassets\\fonts\\RushDriver-Italic.otf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\Snow Kei.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Snow Kei.ttf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\Snowy Season.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Snowy Season.ttf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\Space Matic.otf",
+      "PackagePath": "staticwebassets\\fonts\\Space Matic.otf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\TOUGHWALL.otf",
+      "PackagePath": "staticwebassets\\fonts\\TOUGHWALL.otf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\appendix.ttf",
+      "PackagePath": "staticwebassets\\fonts\\appendix.ttf"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\info\\fontsToUse.txt",
+      "PackagePath": "staticwebassets\\fonts\\info\\fontsToUse.txt"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\info\\moveItems.bat",
+      "PackagePath": "staticwebassets\\fonts\\info\\moveItems.bat"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\info\\moveItems.txt",
+      "PackagePath": "staticwebassets\\fonts\\info\\moveItems.txt"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\fonts\\pepperoni_pizza.ttf",
+      "PackagePath": "staticwebassets\\fonts\\pepperoni_pizza.ttf"
     },
     {
       "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\imgs\\ASP_Net_Core.png",
@@ -41,6 +125,18 @@
       "PackagePath": "staticwebassets\\imgs\\magn_glass3.svg"
     },
     {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\imgs\\maxresdefault.webp",
+      "PackagePath": "staticwebassets\\imgs\\maxresdefault.webp"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\imgs\\placeholda.jpg",
+      "PackagePath": "staticwebassets\\imgs\\placeholda.jpg"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\imgs\\question_mark.svg",
+      "PackagePath": "staticwebassets\\imgs\\question_mark.svg"
+    },
+    {
       "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\imgs\\spring.png",
       "PackagePath": "staticwebassets\\imgs\\spring.png"
     },
@@ -49,8 +145,12 @@
       "PackagePath": "staticwebassets\\imgs\\yt_dlp.png"
     },
     {
-      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\js\\animation.js",
+      "PackagePath": "staticwebassets\\js\\animation.js"
+    },
+    {
+      "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\js\\typeWriter.js",
+      "PackagePath": "staticwebassets\\js\\typeWriter.js"
     },
     {
       "Id": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\lib\\bootstrap\\LICENSE",

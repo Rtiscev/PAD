@@ -4,79 +4,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Downloader & Converter</title>
+    <title>Pad Project</title>
     <link rel="stylesheet" href="~/css/main.css">
+    <link rel="stylesheet" href="~/css/fonts.css">
+    <link rel="stylesheet" href="~/css/animations.css">
 </head>
 
 <body>
-
-    <div class="headerDiv">
-        <h1 class="headerPage">YouTube Downloader & Converter</h1>
-        <div class="uiTypeDiv">
-            <p>Simple</p>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider round"></span>
-            </label>
-            <p> Advanced</p>
+    <div class="welcomeAnimation spiral-leave-active">
+        <div class="splitAnimation"></div>
+        <div class="logo-container">
+            <div class="clipPathAnim">
+                <div class="clipActualPathAnim">
+                    <p class="PADTxt">P</p>
+                    <p class="PADTxt">A</p>
+                    <p class="PADTxt">D</p>
+                </div>
+            </div>
+        </div>
+        <div class="projectTopicDiv">
+            <div class="wrapper">
+                <p id="downloadID"></p>
+                <div class="txtScroller">
+                    <span class="line"></span>
+                    <br />
+                    <span class="line">Audio</span>
+                    <br />
+                    <span class="line">or...</span>
+                    <br />
+                    <span class="line">Both</span>
+                    <br />
+                </div>
+            </div>
+            <p id="continuationID"></p>
+        </div>
+        <div class="madeByDiv">
+            <p>Made by:</p>
+            <p>Rtiscev Alexandru</p>
+            <p>Reznicenco Nichita</p>
         </div>
     </div>
 
-    <div class="container">
-        <div class="input-section">
-            <div class="ytLinkParentDiv">
-                <div class="ytLinkDiv">
-                    <img src="~/imgs/magn_glass3.svg" />
-                    <input type="text" id="youtube-url" placeholder="Paste video link here, like: https://www.youtube.com/watch?v=example" />
-                </div>
-                <button onclick="GetInformation()">&#9658;&#9658;</button>
-            </div>
-            <div class="ytData">
-                <partial name="_YoutubeData" model="@ViewBag.YTD" />
-            </div>
+    <div class="mainContent">
+        <div class="animationDiv">
+            <canvas id="animationCanvas"></canvas>
         </div>
-
-        <div class="download-section">
-            <h2 class="containerHs">Select download option:</h2>
-            <div class="radioButtonsDiv">
-                <div class="radio-group">
-                    <input type="radio" id="fileOption1" value="Video" name="fileGroup">
-                    <label for="fileOption1">Video</label>
-                </div>
-
-                <div class="radio-group">
-                    <input type="radio" id="fileOption2" value="Audio" name="fileGroup">
-                    <label for="fileOption2">Audio</label>
-                </div>
-
-                <div class="radio-group">
-                    <input type="radio" id="fileOption3" value="Video+Audio" name="fileGroup" checked>
-                    <label for="fileOption3">Video + Audio</label>
-                </div>
+        <div class="titleDiv">
+            <p>
+                <span>Pad Project.</span>
+                <br />Download Audio and Video
+            </p>
+        </div>
+        <div class="mainDiv">
+            <div class="enterUrlDiv">
+                <input id="youtubeURL" placeholder="Paste YouTube Url (eg. https://www.youtube.com/watch?v=dQw4w9WgXcQ)" />
+                <button onclick="GetInformation()">Start</button>
             </div>
 
-            <button onclick="ListAllFormats()">List available formats</button>
+            <div class="loadedDataDiv">
+                <span class="loader">Loading</span>
 
-            <div class="quality-options">
-                <h3>Select Quality of available formats:</h3>
-                <div class="availableFormatsDiv">
-                    <partial name="_AvailableFormats" />
+                <div class="dataDiv">
+                    <div class="ytImageDiv">
+                        <img src="~/imgs/placeholda.jpg" />
+                        <p>03:39</p>
+                    </div>
+                    <div class="dataTextDiv">
+                        <h2 id="Title" style="text-align:center">Cole Soileau - Ocean (Ft. Mauiwowi)</h2>
+
+                        <div class="authorAndDateDiv">
+                            <p>Toxicアニメ</p>
+                            <p>2024.10.04</p>
+                        </div>
+
+                        <div class="dataCountDiv">
+                            <div>
+                                <p>👀 </p>
+                                <p>727</p>
+                            </div>
+                            <div>
+                                <p>👍</p>
+                                <p>168</p>
+                            </div>
+                            <div>
+                                <p>💬</p>
+                                <p>5</p>
+                            </div>
+                        </div>
+
+                        <div id="emptyLine2"></div>
+
+                        <div class="toolTipDiv">
+                            <p>Choose file type</p>
+                            <div class="tooltip">
+                                <img src="~/imgs/question_mark.svg" />
+                                <span class="tooltiptext">If you select both the best quality will be chosen for both</span>
+                            </div>
+                        </div>
+
+                        <div class="checkboxesDiv">
+                            <div class="checkbox-wrapper-13">
+                                <input id="c1-13" type="checkbox">
+                                <label for="c1-13">Audio</label>
+                            </div>
+                            <div class="checkbox-wrapper-13">
+                                <input id="c1-14" type="checkbox">
+                                <label for="c1-14">Video</label>
+                            </div>
+                        </div>
+
+                        <div class="getAvailableFormatsDiv">
+                            <button onclick="ListAllFormats()">Get Available Formats</button>
+                            <div id="emptyLine"></div>
+                        </div>
+
+                        <div class="formatsDiv">
+                            <p>Choose format</p>
+                            <div class="selectDiv">
+                                <div class="select" tabindex="1">
+                                    <input class="selectopt" name="test" type="radio" id="opt1" checked>
+                                    <label for="opt1" class="option">Oranges</label>
+                                    <input class="selectopt" name="test" type="radio" id="opt2">
+                                    <label for="opt2" class="option">Apples</label>
+                                    <input class="selectopt" name="test" type="radio" id="opt3">
+                                    <label for="opt3" class="option">Grapefruit</label>
+                                    <input class="selectopt" name="test" type="radio" id="opt4">
+                                    <label for="opt4" class="option">Bananas</label>
+                                    <input class="selectopt" name="test" type="radio" id="opt5">
+                                    <label for="opt5" class="option">Watermelon</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="downloadDiv">
+                            <div class="button">
+                                <div class="button-wrapper">
+                                    <div class="text">Download</div>
+                                    <span class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <button onclick="downloadFile()" class="btn" id="download-btn">Download video/audio/video+audio</button>
+            </div>
+            <div class="downloadingAnimationsDiv dontShow">
+                <div id="animBI">
+                    <span class="biloader"></span>
+                </div>
+                <span class="liloader"></span>
+            </div>
         </div>
     </div>
 
-    <h1>Made with</h1>
-    <div class="madeWithDiv">
-        <img src="~/imgs/ASP_Net_Core.png" />
-        <img src="~/imgs/docker.png" />
-        <img src="~/imgs/FFMPEG.png" />
-        <img src="~/imgs/yt_dlp.png" />
-    </div>
-
-    <script src="~/js/main.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/typeWriter.js"></script>
+    <script src="~/js/animation.js"></script>
+    <script src="~/js/main.js"></script>
 </body>
 </html>

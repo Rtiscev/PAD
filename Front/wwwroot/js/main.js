@@ -1,9 +1,8 @@
 ﻿let ytLink
 let fileName;
 function GetInformation() {
-    ytLink = document.getElementById('youtube-url').value;
+    ytLink = document.getElementById('youtubeURL').value;
     console.log(ytLink);
-
 
     $.ajax({
         url: '/Home/GetD',
@@ -18,19 +17,14 @@ function GetInformation() {
 }
 
 function ListAllFormats() {
-    fileName = document.getElementById('ModelTitle').value;
+    //fileName = document.getElementById('ModelTitle').value;
 
-    const selectedOptionFileType = document.querySelector('input[name="fileGroup"]:checked');
+    let audioClicked = document.querySelector('#c1-13').checked;
+    let videoClicked = document.querySelector('#c1-14').checked;
 
-    if (selectedOptionFileType) {
-        console.log("Selected option:", selectedOptionFileType.value); // For debugging
-    } else {
-        console.log("No option selected");
-    }
-
-    if (selectedOptionFileType.value == "Video") {
+    if (audioClicked && videoClicked) {
         $.ajax({
-            url: '/Home/GetVideoFormats',
+            url: '/Home/GetAllFormats',
             type: 'POST',
             data: JSON.stringify(ytLink),
             contentType: 'application/json',
@@ -40,7 +34,7 @@ function ListAllFormats() {
             }
         });
     }
-    else if (selectedOptionFileType.value == "Audio") {
+    else if (audioClicked) {
         $.ajax({
             url: '/Home/GetAudioFormats',
             type: 'POST',
@@ -52,21 +46,21 @@ function ListAllFormats() {
             }
         });
     }
-    else {
-
+    else if (videoClicked) {
+        $.ajax({
+            url: '/Home/GetVideoFormats',
+            type: 'POST',
+            data: JSON.stringify(ytLink),
+            contentType: 'application/json',
+            success: function (result) {
+                $('.availableFormatsDiv').html(result);
+                console.log(result);
+            }
+        });
     }
-
-    //$.ajax({
-    //    url: '/Home/DownloadFile',
-    //    type: 'POST',
-    //    data: JSON.stringify(fileName),
-    //    contentType: 'application/json',
-    //    success: function (result) {
-    //        $('.availableFormatsDiv').html(result);
-    //        console.log(result);
-    //    }
-    //});
-    // call both of them ez clap
+    else {
+        console.log("error");
+    }
 }
 
 function downloadFile() {
@@ -94,7 +88,4 @@ function downloadFile() {
             console.log(result);
         }
     });
-
-
-
 }

@@ -29,3 +29,4 @@ D:\Uni\year4\PAD\Lab\Front\obj\Debug\net8.0\Front.pdb
 D:\Uni\year4\PAD\Lab\Front\obj\Debug\net8.0\Front.genruntimeconfig.cache
 D:\Uni\year4\PAD\Lab\Front\obj\Debug\net8.0\ref\Front.dll
 D:\Uni\year4\PAD\Lab\Front\bin\Debug\net8.0\libman.json
+D:\Uni\year4\PAD\Lab\Front\obj\Debug\net8.0\Front.sourcelink.json
