@@ -51,3 +51,4 @@ StyleCopReport.xml
 # Others
 .DS_Store
 Thumbs.db
+DesignTimeBuild/
