@@ -5,31 +5,30 @@ function GetInformation() {
     console.log(ytLink);
 
     $.ajax({
-        url: '/Home/GetD',
+        url: '/Home/GetGeneralData',
         type: 'POST',
         data: JSON.stringify(ytLink),
         contentType: 'application/json',
         success: function (result) {
-            $('.ytData').html(result);
+            $('.dataDiv').toggleClass('dontShow');
+            $('.dataDiv').html(result);
             console.log(result);
         }
     });
 }
 
 function ListAllFormats() {
-    //fileName = document.getElementById('ModelTitle').value;
-
     let audioClicked = document.querySelector('#c1-13').checked;
     let videoClicked = document.querySelector('#c1-14').checked;
 
     if (audioClicked && videoClicked) {
         $.ajax({
-            url: '/Home/GetAllFormats',
+            url: '/Home/Get2BestFormats',
             type: 'POST',
             data: JSON.stringify(ytLink),
             contentType: 'application/json',
             success: function (result) {
-                $('.availableFormatsDiv').html(result);
+                $('.formatsDiv').html(result);
                 console.log(result);
             }
         });
@@ -41,7 +40,7 @@ function ListAllFormats() {
             data: JSON.stringify(ytLink),
             contentType: 'application/json',
             success: function (result) {
-                $('.availableFormatsDiv').html(result);
+                $('.formatsDiv').html(result);
                 console.log(result);
             }
         });
@@ -53,7 +52,7 @@ function ListAllFormats() {
             data: JSON.stringify(ytLink),
             contentType: 'application/json',
             success: function (result) {
-                $('.availableFormatsDiv').html(result);
+                $('.formatsDiv').html(result);
                 console.log(result);
             }
         });

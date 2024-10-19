@@ -4,29 +4,50 @@
 @if (Model is not null)
 {
     <div class="ytImageDiv">
-        <img src="~/imgs/placeholda.jpg" />
-        <p>03:39</p>
+        <img src="@Model.Thumbnail" />
+        <p>@Model.DurationString</p>
     </div>
     <div class="dataTextDiv">
-        <h2 id="Title" style="text-align:center">Cole Soileau - Ocean (Ft. Mauiwowi)</h2>
+        <h2 id="Title" style="text-align:center">@Model.Title</h2>
 
         <div class="authorAndDateDiv">
-            <p>Toxicアニメ</p>
-            <p>2024.10.04</p>
+            <p>@Model.Channel</p>
+            <p>@Model.UploadDate</p>
         </div>
 
         <div class="dataCountDiv">
             <div>
                 <p>👀 </p>
-                <p>727</p>
+                @if (@Model.ViewCount != 0 || Model.ViewCount != null)
+                {
+                    <p>@Model.ViewCount</p>
+                }
+                else
+                {
+                    <p>🚫</p>
+                }
             </div>
             <div>
                 <p>👍</p>
-                <p>168</p>
+                @if (@Model.LikeCount != 0 || Model.LikeCount != null)
+                {
+                    <p>@Model.LikeCount</p>
+                }
+                else
+                {
+                    <p>🚫</p>
+                }
             </div>
             <div>
                 <p>💬</p>
-                <p>5</p>
+                @if (@Model.CommentCount != 0 || Model.CommentCount != null)
+                {
+                    <p>@Model.CommentCount</p>
+                }
+                else
+                {
+                    <p>🚫</p>
+                }
             </div>
         </div>
 
@@ -57,21 +78,6 @@
         </div>
 
         <div class="formatsDiv">
-            <p>Choose format</p>
-            <div class="selectDiv">
-                <div class="select" tabindex="1">
-                    <input class="selectopt" name="test" type="radio" id="opt1" checked>
-                    <label for="opt1" class="option">Oranges</label>
-                    <input class="selectopt" name="test" type="radio" id="opt2">
-                    <label for="opt2" class="option">Apples</label>
-                    <input class="selectopt" name="test" type="radio" id="opt3">
-                    <label for="opt3" class="option">Grapefruit</label>
-                    <input class="selectopt" name="test" type="radio" id="opt4">
-                    <label for="opt4" class="option">Bananas</label>
-                    <input class="selectopt" name="test" type="radio" id="opt5">
-                    <label for="opt5" class="option">Watermelon</label>
-                </div>
-            </div>
         </div>
 
         <div class="downloadDiv">
@@ -85,18 +91,4 @@
             </div>
         </div>
     </div>
-
-
-    @* <div>
-        <div class="imgContainer">
-            <img src="@Model.Thumbnail" />
-            <p>@Model.DurationString</p>
-        </div>
-        <p>@Model.CommentCount</p>
-        <p>@Model.LikeCount</p>
-        <p>@Model.Channel</p>
-        <p id="ModelTitle">@Model.Title </p>
-        <p>@Model.ViewCount</p>
-        <p>@Model.UploadDate</p>
-    </div> *@
-}
+} 

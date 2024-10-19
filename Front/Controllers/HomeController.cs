@@ -2,6 +2,7 @@ using Front.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Front.Controllers
 {
@@ -22,7 +23,7 @@ namespace Front.Controllers
         }
 
         [HttpPost]
-        public async Task<PartialViewResult> GetD([FromBody] string ytLink)
+        public async Task<PartialViewResult> GetGeneralData([FromBody] string ytLink)
         {
             string response = await GetResponse(ytLink);
 
@@ -75,17 +76,24 @@ namespace Front.Controllers
             List<VideoData> formats = new();
             foreach (JsonElement element in root.EnumerateArray())
             {
-                string id = element.GetProperty("id").GetString();
-                string ext = element.GetProperty("ext").GetString();
-                string resolution = element.GetProperty("resolution").GetString();
-                string fps = element.GetProperty("fps").GetString();
-                string fileSize = element.GetProperty("fileSize").GetString();
+                try
+                {
+                    int id = Int32.Parse(element.GetProperty("id").GetString());
+                    string ext = element.GetProperty("ext").GetString();
+                    string resolution = element.GetProperty("resolution").GetString();
+                    string fps = element.GetProperty("fps").GetString();
+                    string fileSize = element.GetProperty("fileSize").GetString();
 
-                formats.Add(new() { Id = id, Ext = ext, Resolution = resolution, Fps = fps, FileSize = fileSize });
-                Console.WriteLine($"{id} | {ext} | {resolution} | {fps} | {fileSize}");
+                    formats.Add(new() { Id = id, Ext = ext, Resolution = resolution, Fps = fps, FileSize = fileSize });
+                    Console.WriteLine($"{id} | {ext} | {resolution} | {fps} | {fileSize}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             ViewBag.type = "Video";
-            return PartialView("_AvailableFormats", formats);
+            return PartialView("_FormatsData", formats);
         }
 
         [HttpPost]
@@ -100,19 +108,34 @@ namespace Front.Controllers
             List<AudioData> formats = new();
             foreach (JsonElement element in root.EnumerateArray())
             {
-                string id = element.GetProperty("id").GetString();
-                string ext = element.GetProperty("ext").GetString();
-                string tbr = element.GetProperty("tbr").GetString();
-                string fileSize = element.GetProperty("fileSize").GetString();
+                try
+                {
+                    int id = Int32.Parse(element.GetProperty("id").GetString());
+                    string ext = element.GetProperty("ext").GetString();
+                    string tbr = element.GetProperty("tbr").GetString();
+                    string fileSize = element.GetProperty("fileSize").GetString();
 
-                formats.Add(new() { Id = id, Ext = ext, TBR = tbr, FileSize = fileSize });
-                Console.WriteLine($"{id} | {ext} | {fileSize} | {tbr}");
+                    formats.Add(new() { Id = id, Ext = ext, TBR = tbr, FileSize = fileSize });
+                    Console.WriteLine($"{id} | {ext} | {fileSize} | {tbr}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
 
             ViewBag.type = "Audio";
-            return PartialView("_AvailableFormats", formats);
+            return PartialView("_FormatsData", formats);
         }
 
+        [HttpPost]
+        public async Task<PartialViewResult> Get2BestFormats([FromBody] string ytLink)
+        {
+            List<AudioData> formats = new();
+
+            return PartialView("_FormatsData", formats);
+
+        }
 
         private async Task<string> GetResponse55533(string ytLink)
         {

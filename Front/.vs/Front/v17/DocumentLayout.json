@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\Uni\\year4\\PAD\\Lab\\Front\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\wwwroot\\js\\main.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:wwwroot\\js\\main.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\views\\home\\_youtubedata.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:views\\home\\_youtubedata.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\views\\home\\_formatsdata.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:views\\home\\_formatsdata.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -13,6 +29,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\wwwroot\\css\\animations.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:wwwroot\\css\\animations.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\models\\audiodata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:models\\audiodata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|d:\\uni\\year4\\pad\\lab\\front\\models\\vdinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBC45C9E-BBE4-42E6-81BB-1A1292A56623}|Front.csproj|solutionrelative:models\\vdinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -21,7 +45,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
+          "DockedWidth": 205,
           "SelectedChildIndex": 8,
           "Children": [
             {
@@ -50,39 +74,125 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "animations.css",
               "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\animations.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\animations.css",
               "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\animations.css",
               "RelativeToolTip": "wwwroot\\css\\animations.css",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGMAAAAZAAAA",
+              "ViewState": "AQIAAMEAAAAAAAAAAAAAALMAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-10-19T07:58:36.778Z"
+              "WhenOpened": "2024-10-19T16:26:38.818Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "main.css",
               "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\main.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\main.css",
               "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\css\\main.css",
               "RelativeToolTip": "wwwroot\\css\\main.css",
-              "ViewState": "AQIAAAoCAAAAAAAAAAAawDECAAAJAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-10-04T17:31:57.454Z"
+              "WhenOpened": "2024-10-19T14:54:55.162Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AQIAAEEAAAAAAAAAAAAwwE4AAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T14:26:56.801Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "main.js",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\js\\main.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\main.js",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\wwwroot\\js\\main.js",
+              "RelativeToolTip": "wwwroot\\js\\main.js",
+              "ViewState": "AQIAABsAAAAAAAAAAAAowEoAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-10-19T14:26:28.747Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
               "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADkAAAAdAAAA",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAAAEIAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-09-28T14:40:21.244Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 195,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AudioData.cs",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Models\\AudioData.cs",
+              "RelativeDocumentMoniker": "Models\\AudioData.cs",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Models\\AudioData.cs",
+              "RelativeToolTip": "Models\\AudioData.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T15:58:05.354Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "VDInfo.cs",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Models\\VDInfo.cs",
+              "RelativeDocumentMoniker": "Models\\VDInfo.cs",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Models\\VDInfo.cs",
+              "RelativeToolTip": "Models\\VDInfo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T15:57:59.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_FormatsData.cshtml",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\_FormatsData.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\_FormatsData.cshtml",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\_FormatsData.cshtml",
+              "RelativeToolTip": "Views\\Home\\_FormatsData.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACoAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-19T15:05:46.865Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_YoutubeData.cshtml",
+              "DocumentMoniker": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\_YoutubeData.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\_YoutubeData.cshtml",
+              "ToolTip": "D:\\Uni\\year4\\PAD\\Lab\\Front\\Views\\Home\\_YoutubeData.cshtml",
+              "RelativeToolTip": "Views\\Home\\_YoutubeData.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAE8AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-19T14:30:57.902Z",
               "EditorCaption": ""
             }
           ]

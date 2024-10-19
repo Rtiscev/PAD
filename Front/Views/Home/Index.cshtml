@@ -64,92 +64,11 @@
             <div class="loadedDataDiv">
                 <span class="loader">Loading</span>
 
-                <div class="dataDiv">
-                    <div class="ytImageDiv">
-                        <img src="~/imgs/placeholda.jpg" />
-                        <p>03:39</p>
-                    </div>
-                    <div class="dataTextDiv">
-                        <h2 id="Title" style="text-align:center">Cole Soileau - Ocean (Ft. Mauiwowi)</h2>
-
-                        <div class="authorAndDateDiv">
-                            <p>Toxicアニメ</p>
-                            <p>2024.10.04</p>
-                        </div>
-
-                        <div class="dataCountDiv">
-                            <div>
-                                <p>👀 </p>
-                                <p>727</p>
-                            </div>
-                            <div>
-                                <p>👍</p>
-                                <p>168</p>
-                            </div>
-                            <div>
-                                <p>💬</p>
-                                <p>5</p>
-                            </div>
-                        </div>
-
-                        <div id="emptyLine2"></div>
-
-                        <div class="toolTipDiv">
-                            <p>Choose file type</p>
-                            <div class="tooltip">
-                                <img src="~/imgs/question_mark.svg" />
-                                <span class="tooltiptext">If you select both the best quality will be chosen for both</span>
-                            </div>
-                        </div>
-
-                        <div class="checkboxesDiv">
-                            <div class="checkbox-wrapper-13">
-                                <input id="c1-13" type="checkbox">
-                                <label for="c1-13">Audio</label>
-                            </div>
-                            <div class="checkbox-wrapper-13">
-                                <input id="c1-14" type="checkbox">
-                                <label for="c1-14">Video</label>
-                            </div>
-                        </div>
-
-                        <div class="getAvailableFormatsDiv">
-                            <button onclick="ListAllFormats()">Get Available Formats</button>
-                            <div id="emptyLine"></div>
-                        </div>
-
-                        <div class="formatsDiv">
-                            <p>Choose format</p>
-                            <div class="selectDiv">
-                                <div class="select" tabindex="1">
-                                    <input class="selectopt" name="test" type="radio" id="opt1" checked>
-                                    <label for="opt1" class="option">Oranges</label>
-                                    <input class="selectopt" name="test" type="radio" id="opt2">
-                                    <label for="opt2" class="option">Apples</label>
-                                    <input class="selectopt" name="test" type="radio" id="opt3">
-                                    <label for="opt3" class="option">Grapefruit</label>
-                                    <input class="selectopt" name="test" type="radio" id="opt4">
-                                    <label for="opt4" class="option">Bananas</label>
-                                    <input class="selectopt" name="test" type="radio" id="opt5">
-                                    <label for="opt5" class="option">Watermelon</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="downloadDiv">
-                            <div class="button">
-                                <div class="button-wrapper">
-                                    <div class="text">Download</div>
-                                    <span class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="dataDiv dontShow">
+                    <partial name="_YoutubeData"></partial>
                 </div>
-
             </div>
+
             <div class="downloadingAnimationsDiv dontShow">
                 <div id="animBI">
                     <span class="biloader"></span>

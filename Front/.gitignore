@@ -1,6 +1,7 @@
 # Build Folders
 bin/
 obj/
+.vs/
 
 # User-specific files
 *.rsuser
