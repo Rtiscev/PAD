@@ -19,9 +19,9 @@ services:
       - "27017:27017"  # Expose MongoDB on port 27017
     volumes:
       - mongodb_data:/data/db  # Persist MongoDB data on the host machine
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root  # MongoDB root username
-      - MONGO_INITDB_ROOT_PASSWORD=rootpassword  # MongoDB root password
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=root  # MongoDB root username
+    #   - MONGO_INITDB_ROOT_PASSWORD=rootpassword  # MongoDB root password
 
 # Volumes
 volumes:

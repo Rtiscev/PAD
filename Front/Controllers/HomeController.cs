@@ -1,6 +1,10 @@
 using Front.Models;
 using Microsoft.AspNetCore.Mvc;
+//using MongoDB.Bson;
+//using MongoDB.Driver;
+//using MongoDB.Driver.GridFS;
 using System.Diagnostics;
+using System.IO;
 using System.Text.Json;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -8,7 +12,10 @@ namespace Front.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private ILogger<HomeController> _logger;
+        //private IMongoDatabase _database;
+        //private GridFSBucket _gridFS;
+
 
         private string NAME;
 
@@ -19,6 +26,28 @@ namespace Front.Controllers
 
         public IActionResult Index()
         {
+            //try
+            //{
+            //    var client = new MongoClient("mongodb://localhost");
+            //    _database = client.GetDatabase("TestDB");
+            //    _gridFS = new GridFSBucket(_database);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.Write(ex.Message);
+            //}
+
+            string binPath = AppContext.BaseDirectory;
+            Console.WriteLine("Path is:" + binPath);
+
+            // List directories
+            string[] directories = Directory.GetDirectories(binPath);
+            Console.WriteLine("Directories:");
+            foreach (string directory in directories)
+            {
+                Console.WriteLine(directory);
+            }
+
             return View();
         }
 
@@ -26,42 +55,8 @@ namespace Front.Controllers
         public async Task<PartialViewResult> GetGeneralData([FromBody] string ytLink)
         {
             string response = await GetResponse(ytLink);
-
-            VideoMetadata videoMetadata;
-
-            // Parse the JSON
-            using (JsonDocument doc = JsonDocument.Parse(response))
-            {
-                JsonElement root = doc.RootElement;
-
-                videoMetadata = new VideoMetadata
-                {
-                    Title = root.GetProperty("title").GetString(),
-                    Thumbnail = root.GetProperty("thumbnail").GetString(),
-                    DurationString = root.GetProperty("duration_string").GetString(),
-                    Channel = root.GetProperty("channel").GetString(),
-                    UploadDate = root.GetProperty("upload_date").GetString()
-                };
-
-                // Safely get the comment count
-                if (root.TryGetProperty("comment_count", out JsonElement commentCountElement) && commentCountElement.ValueKind != JsonValueKind.Null)
-                {
-                    videoMetadata.CommentCount = commentCountElement.GetInt32();
-                }
-
-                // Safely get the like count
-                if (root.TryGetProperty("like_count", out JsonElement likeCountElement) && likeCountElement.ValueKind != JsonValueKind.Null)
-                {
-                    videoMetadata.LikeCount = likeCountElement.GetInt32();
-                }
-
-                // Safely get the view count
-                if (root.TryGetProperty("view_count", out JsonElement viewCountElement) && viewCountElement.ValueKind != JsonValueKind.Null)
-                {
-                    videoMetadata.ViewCount = viewCountElement.GetInt32();
-                }
-            }
-            return PartialView("_YoutubeData", videoMetadata);
+            GeneralData? generalData = JsonSerializer.Deserialize<GeneralData>(response);
+            return PartialView("_YoutubeData", generalData);
         }
 
         [HttpPost]
@@ -69,9 +64,13 @@ namespace Front.Controllers
         {
             string response = await GetResponse2(ytLink);
 
+            Console.WriteLine("------------------");
+            Console.WriteLine(response);
+            Console.WriteLine("------------------");
+
+
             JsonDocument doc = JsonDocument.Parse(response);
             JsonElement root = doc.RootElement;
-
 
             List<VideoData> formats = new();
             foreach (JsonElement element in root.EnumerateArray())
@@ -136,6 +135,44 @@ namespace Front.Controllers
             return PartialView("_FormatsData", formats);
 
         }
+
+
+
+        //// Method to upload a large file
+        //public async Task<ObjectId> UploadFileAsync(string filePath)
+        //{
+        //    using (var stream = System.IO.File.OpenRead(filePath))
+        //    {
+        //        // Upload file to GridFS
+        //        ObjectId fileId = await _gridFS.UploadFromStreamAsync(Path.GetFileName(filePath), stream);
+        //        Console.WriteLine($"File uploaded with Id: {fileId}");
+        //        return fileId;
+        //    }
+        //}
+
+        //// Method to download a large file
+        //public async Task DownloadFileAsync(ObjectId fileId, string outputFilePath)
+        //{
+        //    using (var stream = System.IO.File.Create(outputFilePath))
+        //    {
+        //        // Download file from GridFS
+        //        await _gridFS.DownloadToStreamAsync(fileId, stream);
+        //        Console.WriteLine($"File downloaded to: {outputFilePath}");
+        //    }
+        //}
+
+        //// Method to list all stored files in GridFS
+        //public async Task ListFilesAsync()
+        //{
+        //    using (var cursor = await _gridFS.FindAsync(Builders<GridFSFileInfo>.Filter.Empty))
+        //    {
+        //        foreach (var fileInfo in await cursor.ToListAsync())
+        //        {
+        //            Console.WriteLine($"File: {fileInfo.Filename}, Id: {fileInfo.Id}");
+        //        }
+        //    }
+        //}
+
 
         private async Task<string> GetResponse55533(string ytLink)
         {

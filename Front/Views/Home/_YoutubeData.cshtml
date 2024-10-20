@@ -1,26 +1,26 @@
 ﻿@using Front.Models;
-@model VideoMetadata;
+@model GeneralData;
 
 @if (Model is not null)
 {
     <div class="ytImageDiv">
-        <img src="@Model.Thumbnail" />
-        <p>@Model.DurationString</p>
+        <img src="@Model.thumbnail" />
+        <p>@Model.duration_string</p>
     </div>
     <div class="dataTextDiv">
-        <h2 id="Title" style="text-align:center">@Model.Title</h2>
+        <h2 id="Title" style="text-align:center">@Model.title</h2>
 
         <div class="authorAndDateDiv">
-            <p>@Model.Channel</p>
-            <p>@Model.UploadDate</p>
+            <p>@Model.channel</p>
+            <p>@Model.upload_date</p>
         </div>
 
         <div class="dataCountDiv">
             <div>
                 <p>👀 </p>
-                @if (@Model.ViewCount != 0 || Model.ViewCount != null)
+                @if (@Model.view_count != 0 || Model.view_count != null)
                 {
-                    <p>@Model.ViewCount</p>
+                    <p>@Model.view_count</p>
                 }
                 else
                 {
@@ -29,9 +29,9 @@
             </div>
             <div>
                 <p>👍</p>
-                @if (@Model.LikeCount != 0 || Model.LikeCount != null)
+                @if (@Model.like_count != 0 || Model.like_count != null)
                 {
-                    <p>@Model.LikeCount</p>
+                    <p>@Model.like_count</p>
                 }
                 else
                 {
@@ -40,9 +40,9 @@
             </div>
             <div>
                 <p>💬</p>
-                @if (@Model.CommentCount != 0 || Model.CommentCount != null)
+                @if (@Model.comment_count != 0 || Model.comment_count != null)
                 {
-                    <p>@Model.CommentCount</p>
+                    <p>@Model.comment_count</p>
                 }
                 else
                 {
