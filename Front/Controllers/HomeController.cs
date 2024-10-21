@@ -1,17 +1,22 @@
 using Front.Models;
 using Microsoft.AspNetCore.Mvc;
-//using MongoDB.Bson;
-//using MongoDB.Driver;
-//using MongoDB.Driver.GridFS;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
+using SharpCompress.Common;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Text.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Front.Controllers
 {
     public class HomeController : Controller
     {
+        IMongoCollection<Restaurant> _restaurantsCollection;
+        string MongoConnectionString = "mongodb://root:example@mongo:27017/";
         private ILogger<HomeController> _logger;
         //private IMongoDatabase _database;
         //private GridFSBucket _gridFS;
@@ -24,18 +29,12 @@ namespace Front.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //try
+            //Task.Run(() =>
             //{
-            //    var client = new MongoClient("mongodb://localhost");
-            //    _database = client.GetDatabase("TestDB");
-            //    _gridFS = new GridFSBucket(_database);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.Write(ex.Message);
-            //}
+            //    ConfigureDatabase();
+            //});
 
             string binPath = AppContext.BaseDirectory;
             Console.WriteLine("Path is:" + binPath);
@@ -50,6 +49,181 @@ namespace Front.Controllers
 
             return View();
         }
+
+        private async Task ConfigureDatabase()
+        {
+            try
+            {
+                Setup();
+
+                Console.WriteLine("Inserting a document...");
+                await InsertOneRestaurantAsync();
+
+                // Creates a filter for all documents that have a "name" value of "Mongo's Pizza"
+                var filter = Builders<Restaurant>.Filter
+                    .Eq(r => r.Name, "Mongo's Pizza");
+
+                // Finds the newly inserted document by using the filter
+                var document = _restaurantsCollection.Find(filter).FirstOrDefault();
+
+                // Prints the document
+                Console.WriteLine($"Document Inserted: {document.ToBsonDocument()}");
+
+                Cleanup();
+
+                await CreateBigAssFile();
+
+                var database = new MongoClient(MongoConnectionString).GetDatabase("sample_restaurants");
+
+                var fs = new GridFSBucket(database);
+
+                var id = await TryUploading(fs);
+
+                Console.WriteLine("ID IS: " + id);
+                // Prints a message if any exceptions occur during the operation    
+            }
+            catch (Exception me)
+            {
+                Console.WriteLine("Unable to insert due to an error: " + me);
+            }
+
+        }
+
+        private async Task CreateBigAssFile()
+        {
+            string filePath = "randomContent.txt";
+            long targetFileSizeMB = 30;
+            long targetFileSizeBytes = targetFileSizeMB * 1024 * 1024; // 30 MB in bytes
+
+            // Create a StreamWriter to write into the file
+            using (StreamWriter writer = new StreamWriter(Path.Combine(AppContext.BaseDirectory, filePath), false, Encoding.UTF8))
+            {
+                Random random = new Random();
+                StringBuilder sb = new StringBuilder();
+
+                // Create random content in chunks
+                while (new FileInfo(filePath).Length < targetFileSizeBytes)
+                {
+                    sb.Clear();
+                    for (int i = 0; i < 1000; i++) // Adjust 1000 to generate more/less data in each iteration
+                    {
+                        char randomChar = (char)random.Next(32, 126); // Printable ASCII characters
+                        sb.Append(randomChar);
+                    }
+
+                    // Write the generated content to the file
+                    writer.Write(sb.ToString());
+                }
+            }
+
+            Console.WriteLine("File generated successfully with size exceeding 30 MB.");
+        }
+
+        private async Task<ObjectId> TryUploading(GridFSBucket fs)
+        {
+            using (var s = System.IO.File.OpenRead(Path.Combine(AppContext.BaseDirectory, "randomContent.txt")))
+            {
+                var t = Task.Run<ObjectId>(() =>
+                {
+                    return fs.UploadFromStreamAsync("test.txt", s);
+                });
+
+                return t.Result;
+            }
+        }
+
+        private async Task InsertOneRestaurantAsync()
+        {
+            Cleanup();
+
+            // start-insert-one-async
+            // Generates a new restaurant document
+            Restaurant newRestaurant = new()
+            {
+                Name = "Mongo's Pizza",
+                RestaurantId = "12345",
+                Cuisine = "Pizza",
+                Address = new()
+                {
+                    Street = "Pizza St",
+                    ZipCode = "10003"
+                },
+                Borough = "Manhattan",
+            };
+
+            // Asynchronously inserts the new document into the restaurants collection
+            await _restaurantsCollection.InsertOneAsync(newRestaurant);
+            // end-insert-one-async
+        }
+
+        private void Setup()
+        {
+            // Allows automapping of the camelCase database fields to models
+            var camelCaseConvention = new ConventionPack { new CamelCaseElementNameConvention() };
+            ConventionRegistry.Register("CamelCase", camelCaseConvention, type => true);
+
+            // Establishes the connection to MongoDB and accesses the restaurants database
+            var mongoClient = new MongoClient(MongoConnectionString);
+            var restaurantsDatabase = mongoClient.GetDatabase("sample_restaurants");
+            _restaurantsCollection = restaurantsDatabase.GetCollection<Restaurant>("restaurants");
+        }
+
+        private void Cleanup()
+        {
+            var filter = Builders<Restaurant>.Filter
+                .Eq(r => r.Name, "Mongo's Pizza");
+
+            _restaurantsCollection.DeleteOne(filter);
+        }
+
+        public class Restaurant
+        {
+            public ObjectId Id { get; set; }
+
+            public string Name { get; set; }
+
+            [BsonElement("restaurant_id")]
+            public string RestaurantId { get; set; }
+
+            public string Cuisine { get; set; }
+
+            public Address Address { get; set; }
+
+            public string Borough { get; set; }
+
+            public List<GradeEntry> Grades { get; set; }
+        }
+
+        public class Address
+        {
+            public string Building { get; set; }
+
+            [BsonElement("coord")]
+            public double[] Coordinates { get; set; }
+
+            public string Street { get; set; }
+
+            [BsonElement("zipcode")]
+            public string ZipCode { get; set; }
+        }
+
+        public class GradeEntry
+        {
+            public DateTime Date { get; set; }
+
+            public string Grade { get; set; }
+
+            public float? Score { get; set; }
+        }
+
+
+
+
+
+
+
+
+
 
         [HttpPost]
         public async Task<PartialViewResult> GetGeneralData([FromBody] string ytLink)

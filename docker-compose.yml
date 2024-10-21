@@ -12,17 +12,37 @@ services:
     ports:
       - "59162:8080"
 
-  mongodb:
-    image: mongo:latest  # Use the official MongoDB Docker image
-    container_name: mongodb
+  mongo:
+    image: mongo
+    restart: always
     ports:
-      - "27017:27017"  # Expose MongoDB on port 27017
-    volumes:
-      - mongodb_data:/data/db  # Persist MongoDB data on the host machine
-    # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=root  # MongoDB root username
-    #   - MONGO_INITDB_ROOT_PASSWORD=rootpassword  # MongoDB root password
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 59163:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+  # mongodb:
+  #   # image: mongo:latest  # Use the official MongoDB Docker image
+  #   image: mongo:latest  # Use the official MongoDB Docker image
+  #   container_name: mongodb
+  #   ports:
+  #     - "49155:27017"  # Expose MongoDB on port 27017
+  #   volumes:
+  #     - mongodb_data:/data/db  # Persist MongoDB data on the host machine
+  #   # environment:
+  #   #   - MONGO_INITDB_ROOT_USERNAME=root  # MongoDB root username
+  #   #   - MONGO_INITDB_ROOT_PASSWORD=rootpassword  # MongoDB root password
 
 # Volumes
-volumes:
-  mongodb_data:  # Named volume for MongoDB data persistence
+# volumes:
+  # mongodb_data:  # Named volume for MongoDB data persistence
