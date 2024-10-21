@@ -4,6 +4,7 @@ function GetInformation() {
     ytLink = $('#youtubeURL').val();
     console.log(ytLink);
     $('.loader').toggleClass('dontShow');
+    $('.loader').toggleClass('loaderAnim');
     $('.enterUrlDiv button').prop('disabled', true);
 
     $.ajax({
@@ -14,6 +15,7 @@ function GetInformation() {
         success: function (result) {
             $('.loader').toggleClass('dontShow');
             $('.loadedDataDiv').css('background-color', 'lightblue');
+            $('.loadedDataDiv').toggleClass('dataDivAnim');
 
             $('.dataDiv').toggleClass('dontShow');
             $('.dataDiv').html(result);

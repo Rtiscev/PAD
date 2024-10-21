@@ -1,0 +1,45 @@
+﻿@font-face {
+    font-family: "Chaser";
+    src: url('/fonts/CHASER.otf') format('truetype');
+}
+
+@font-face {
+    font-family: "CryptoHunter";
+    src: url('/fonts/CryptoHunter-E44Rj.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "ForTheWorld";
+    src: url('/fonts/ForTheWorld-aYYmE.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Onion";
+    src: url('/fonts/Onion\ Family\ Font.otf') format('truetype');
+}
+
+@font-face {
+    font-family: "RushDriver";
+    src: url('/fonts/RushDriver-Italic.otf') format('truetype');
+}
+
+@font-face {
+    font-family: "SpaceMatic";
+    src: url('/fonts/Space\ Matic.otf') format('truetype');
+}
+
+@font-face {
+    font-family: "TOUGHWALL";
+    src: url('/fonts/TOUGHWALL.otf') format('truetype');
+}
+
+/* THE BEST:
+    SPACE MATIC
+    
+    CRYPTO HUNTER
+*/
+
+@font-face {
+    font-family: APPENDIX;
+    src: url('~/../../fonts/WinterKingdom.ttf') format('opentype');
+}

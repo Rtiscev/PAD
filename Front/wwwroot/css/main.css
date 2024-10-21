@@ -365,6 +365,19 @@ body {
     border-radius: inherit;
 }
 
+.dataDivAnim {
+    opacity: 0;
+    transform: scale(0);
+    animation: dataDivAnimation 1s ease-in-out forwards;
+}
+
+@keyframes dataDivAnimation {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .ytImageDiv {
     width: 60%;
     position: relative;
@@ -375,8 +388,7 @@ body {
         width: 100%;
         height: 100%;
         aspect-ratio: 16/9;
-
-        border-radius:inherit;
+        border-radius: inherit;
     }
 
     .ytImageDiv p {
@@ -387,11 +399,11 @@ body {
 
     .ytImageDiv div {
         position: absolute;
-        top:0;
-        left:0;
+        top: 0;
+        right: 0;
         background-color: lightblue;
-        padding: 1% 3%;
-        border-radius: 500px 0px 0px 500px;
+        padding: 2% 4%;
+        border-radius: 1px 0px 0px 500px;
     }
 
 .dataTextDiv {
@@ -588,6 +600,7 @@ body {
     letter-spacing: 1rem;
     position: relative;
     box-sizing: border-box;
+    opacity: 0;
 }
 
     .loader::after {
@@ -603,6 +616,16 @@ body {
         box-sizing: border-box;
         animation: animloader 6s linear infinite;
     }
+
+.loaderAnim {
+    animation: loaderAnimation 1s forwards ease-in-out;
+}
+
+@keyframes loaderAnimation {
+    to {
+        opacity: 1;
+    }
+}
 
 /* CHECKBOX */
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {
