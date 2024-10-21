@@ -1,0 +1,1 @@
+FOR /R "D:\Uni\year4\PAD\Lab\Front\wwwroot\fonts" %%i IN (*.*) DO MOVE "%%i" "D:\Uni\year4\PAD\Lab\Front\wwwroot\fonts"

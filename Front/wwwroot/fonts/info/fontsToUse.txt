@@ -1,0 +1,15 @@
+﻿data div: Inner Mounting Flame
+	     Lace Nice
+	     MonstersHeart-Regular (?)
+	     Snow Kei
+	     Snowy Season
+	     
+ADD SNACKBAR:
+	https://www.w3schools.com/howto/howto_js_snackbar.asp
+	
+TEXT DIVIDER:
+-----like-----
+	https://www.w3schools.com/howto/howto_css_text_divider.asp
+	
+	
+MIX-BLEND-MODE:DIFFERENCE
