@@ -34,7 +34,7 @@ namespace Front.Controllers
             //Task.Run(() =>
             //{
             //    ConfigureDatabase();
-            //});
+            //});   
 
             string binPath = AppContext.BaseDirectory;
             Console.WriteLine("Path is:" + binPath);

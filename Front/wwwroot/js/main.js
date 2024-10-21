@@ -1,8 +1,10 @@
 ﻿let ytLink
 let fileName;
 function GetInformation() {
-    ytLink = document.getElementById('youtubeURL').value;
+    ytLink = $('#youtubeURL').val();
     console.log(ytLink);
+    $('.loader').toggleClass('dontShow');
+    $('.enterUrlDiv button').prop('disabled', true);
 
     $.ajax({
         url: '/Home/GetGeneralData',
@@ -10,9 +12,11 @@ function GetInformation() {
         data: JSON.stringify(ytLink),
         contentType: 'application/json',
         success: function (result) {
+            $('.loader').toggleClass('dontShow');
+            $('.loadedDataDiv').css('background-color', 'lightblue');
+
             $('.dataDiv').toggleClass('dontShow');
             $('.dataDiv').html(result);
-            console.log(result);
         }
     });
 }
