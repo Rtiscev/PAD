@@ -63,68 +63,18 @@ namespace Front.Controllers
         public async Task<PartialViewResult> GetVideoFormats([FromBody] string ytLink)
         {
             string response = await GetResponse2(ytLink);
-
-            Console.WriteLine("------------------");
-            Console.WriteLine(response);
-            Console.WriteLine("------------------");
-
-
-            JsonDocument doc = JsonDocument.Parse(response);
-            JsonElement root = doc.RootElement;
-
-            List<VideoData> formats = new();
-            foreach (JsonElement element in root.EnumerateArray())
-            {
-                try
-                {
-                    int id = Int32.Parse(element.GetProperty("id").GetString());
-                    string ext = element.GetProperty("ext").GetString();
-                    string resolution = element.GetProperty("resolution").GetString();
-                    string fps = element.GetProperty("fps").GetString();
-                    string fileSize = element.GetProperty("fileSize").GetString();
-
-                    formats.Add(new() { Id = id, Ext = ext, Resolution = resolution, Fps = fps, FileSize = fileSize });
-                    Console.WriteLine($"{id} | {ext} | {resolution} | {fps} | {fileSize}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
+            var videoFormats = JsonSerializer.Deserialize<VideoData[]>(response);
             ViewBag.type = "Video";
-            return PartialView("_FormatsData", formats);
+            return PartialView("_FormatsData", videoFormats);
         }
 
         [HttpPost]
         public async Task<PartialViewResult> GetAudioFormats([FromBody] string ytLink)
         {
             string response = await GetResponse3(ytLink);
-
-            JsonDocument doc = JsonDocument.Parse(response);
-            JsonElement root = doc.RootElement;
-
-
-            List<AudioData> formats = new();
-            foreach (JsonElement element in root.EnumerateArray())
-            {
-                try
-                {
-                    int id = Int32.Parse(element.GetProperty("id").GetString());
-                    string ext = element.GetProperty("ext").GetString();
-                    string tbr = element.GetProperty("tbr").GetString();
-                    string fileSize = element.GetProperty("fileSize").GetString();
-
-                    formats.Add(new() { Id = id, Ext = ext, TBR = tbr, FileSize = fileSize });
-                    Console.WriteLine($"{id} | {ext} | {fileSize} | {tbr}");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-
+            var audioFormats = JsonSerializer.Deserialize<AudioData[]>(response);
             ViewBag.type = "Audio";
-            return PartialView("_FormatsData", formats);
+            return PartialView("_FormatsData", audioFormats);
         }
 
         [HttpPost]

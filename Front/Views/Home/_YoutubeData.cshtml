@@ -18,7 +18,7 @@
         <div class="dataCountDiv">
             <div>
                 <p>👀 </p>
-                @if (@Model.view_count != 0 || Model.view_count != null)
+                @if (@Model.view_count != 0)
                 {
                     <p>@Model.view_count</p>
                 }
@@ -29,7 +29,7 @@
             </div>
             <div>
                 <p>👍</p>
-                @if (@Model.like_count != 0 || Model.like_count != null)
+                @if (@Model.like_count != 0)
                 {
                     <p>@Model.like_count</p>
                 }
@@ -40,7 +40,7 @@
             </div>
             <div>
                 <p>💬</p>
-                @if (@Model.comment_count != 0 || Model.comment_count != null)
+                @if (@Model.comment_count != 0)
                 {
                     <p>@Model.comment_count</p>
                 }
