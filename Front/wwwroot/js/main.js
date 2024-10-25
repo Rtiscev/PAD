@@ -94,3 +94,20 @@ function downloadFile() {
         }
     });
 }
+
+function downloadFileById(id) {
+    let dataJSON = {
+        "id": id,
+    };
+
+
+    $.ajax({
+        url: '/Home/DownloadFileById',
+        type: 'POST',
+        data: JSON.stringify(dataJSON),
+        contentType: 'application/json',
+        success: function (result) {
+            console.log(result);
+        }
+    });
+}

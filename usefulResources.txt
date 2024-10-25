@@ -1,0 +1,5 @@
+https://stackoverflow.com/questions/57844859/how-to-enumerate-files-in-gridfs-with-c-sharp
+https://stackoverflow.com/questions/4988436/mongodb-gridfs-with-c-how-to-store-files-such-as-images
+
+https://stackoverflow.com/questions/54011332/authenticationfailed-to-mongodb-with-spring-boot
+https://github.com/hansitharaka/springboot-mongodb-file-upload-download/blob/master/src/main/resources/application.properties

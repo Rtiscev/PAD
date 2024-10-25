@@ -1,7 +1,15 @@
 package com.example.ms_yt_dlp.Controller;
 
+import com.example.ms_yt_dlp.model.LoadFile;
+import com.example.ms_yt_dlp.service.FileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -476,4 +484,111 @@ public class DownloadController {
         // Возвращаем вывод команды
         return output.toString();
     }
+
+    @GetMapping("/downloadSimple") // Изменен на GET
+    @ResponseBody
+    public String DownloadSimple(@RequestParam String videoUrl) throws IOException, InterruptedException {
+
+        // Полный путь к бинарному файлу yt-dlp
+        String ytDlpPath = "yt-dlp"; // Измените это, если необходимо
+
+        // Получаем текущую рабочую директорию (т.е. корень вашего проекта)
+        String projectDirectory = System.getProperty("user.dir");
+
+        // Указываем директорию для вывода (например, папка "downloads")
+        Path outputDirectory = Paths.get(projectDirectory, "downloads");
+
+        // ------- CHECK FILES THAT ALREADY EXIST
+        ArrayList<File> files = new ArrayList<File>();
+        File folder = new File(String.valueOf(outputDirectory));
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    files.add(file);
+                }
+            }
+        }
+
+
+        // Убедимся, что директория для вывода существует
+        if (Files.notExists(outputDirectory)) {
+            Files.createDirectory(outputDirectory);
+        }
+
+        // Создаем шаблон вывода для yt-dlp, сохраняем файлы в указанной папке
+        String outputTemplate = outputDirectory + "/%(title)s.%(ext)s";
+
+        // Создаем команду для запуска yt-dlp
+        ProcessBuilder processBuilder = new ProcessBuilder(ytDlpPath, "-o", outputTemplate, videoUrl);
+        processBuilder.redirectErrorStream(true); // Перенаправляем ошибки в стандартный вывод
+
+        // Запускаем процесс
+        Process process = processBuilder.start();
+
+        // Читаем вывод от yt-dlp
+        StringBuilder output = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+        }
+        // Ждем завершения процесса
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            return "oops";
+        }
+
+        // ------- CHECK FILES THAT ALREADY EXIST
+        ArrayList<File> files2 = new ArrayList<File>();
+        File[] listOfFiles2 = folder.listFiles();
+
+        for (File file : listOfFiles2) {
+            if (file.isFile()) {
+                files2.add(file);
+            }
+        }
+
+        HashSet<Object> set2 = new HashSet<>(Arrays.asList(files2.toArray()));
+        Set<Object> difference = new HashSet<>(set2);
+        if (!files.isEmpty()) {
+            // Convert arrays to sets
+            HashSet<Object> set1 = new HashSet<>(Arrays.asList(files.toArray()));
+
+            // Difference (set1 - set2)
+            difference.removeAll(set1);
+        }
+
+        String result;
+        if (difference.isEmpty()) {
+            result = "file already exists!";
+        } else {
+            File found = (File) difference.stream().findFirst().get();
+            String ID = fileService.addSimpleFile(found.getAbsolutePath());
+            // Возвращаем вывод команды
+            result = found.getAbsolutePath() + " " + ID;
+        }
+        return result;
+    }
+
+
+    @Autowired
+    private FileService fileService;
+
+    public String upload(MultipartFile file) throws IOException {
+        return fileService.addFile(file);
+    }
+
+    @GetMapping("/downloadFileLocally") // Изменен на GET
+    public ResponseEntity<ByteArrayResource> download(@RequestParam String id) throws IOException, InterruptedException {
+        LoadFile loadFile = fileService.downloadFile(id);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(loadFile.getFileType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + loadFile.getFilename() + "\"")
+                .body(new ByteArrayResource(loadFile.getFile()));
+    }
+
 }
