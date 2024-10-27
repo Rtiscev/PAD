@@ -10,7 +10,7 @@ services:
   ytdlp:
     build: './PAD-Spring_Boot'
     ports:
-      - "59162:8080"
+      - "59154:8080"
 
   mongo:
     image: mongo
