@@ -32,13 +32,14 @@ body {
     margin: 0;
     position: relative;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: auto;
     background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100vw;
-    height: 100vh;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*flex-direction: column;*/
+    /*height: 100vh;*/
 }
 
 /* -----------FIRST PART----------- */
@@ -49,7 +50,10 @@ body {
 }
 
 .welcomeAnimation {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /*position: relative;*/
     display: flex;
     flex-direction: column;
     width: 100vw;
@@ -230,13 +234,15 @@ body {
 
 /* -----------SECOND PART----------- */
 .mainContent {
-    position: fixed;
+    position: relative;
     z-index: 1;
     width: 100vw;
-    height: 100vh;
+    /*height: 100vh;*/
     display: flex;
+    overflow: inherit;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 /* ANIMATION */
@@ -244,7 +250,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: -1;
@@ -290,31 +296,38 @@ body {
     }
 
 /* MAIN DIV */
-.mainDiv {
+.ytdlpDiv {
     width: 100%;
     position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 @media (min-width:576px) {
-    .mainDiv {
+    .ytdlpDiv, .ffmpegDiv {
         max-width: 540px;
     }
 }
 
 @media (min-width:768px) {
-    .mainDiv {
+    .ytdlpDiv, .ffmpegDiv {
         max-width: 720px;
     }
 }
 
 @media (min-width:992px) {
-    .mainDiv {
+    .ytdlpDiv, .ffmpegDiv {
         max-width: 960px;
     }
 }
 
 @media (min-width:1200px) {
-    .mainDiv {
+    .ytdlpDiv, .ffmpegDiv {
         max-width: 1140px;
     }
 }
@@ -323,8 +336,10 @@ body {
 .enterUrlDiv {
     display: flex;
     gap: 10px;
+    width: calc(100% - 60px);
     background-color: lightblue;
     padding: 20px 30px;
+    border-radius: 999999px;
 }
 
     .enterUrlDiv input, button {
@@ -338,6 +353,9 @@ body {
         padding: 0 0 0 15px;
         border: 1px solid deepskyblue;
         background-color: transparent;
+        border-radius: inherit;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0
     }
 
     .enterUrlDiv button {
@@ -345,6 +363,9 @@ body {
         background-color: skyblue;
         border: 1px solid deepskyblue;
         cursor: pointer;
+        border-radius: inherit;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
     }
 
 /* URL DATA DIV */
@@ -354,7 +375,7 @@ body {
     width: 100%;
     margin-top: 20px;
     background-color: unset;
-    border-radius: 5rem 0 0 5rem;
+    /*border-radius: 5rem 0 0 5rem;*/
 }
 
 
@@ -362,6 +383,7 @@ body {
 .dataDiv {
     display: flex;
     flex-direction: row;
+    width: 100%;
     border-radius: inherit;
 }
 
@@ -384,29 +406,40 @@ body {
     border-radius: inherit;
 }
 
+    .ytImageDiv svg {
+        position: absolute;
+        /*left: -4px;*/
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
     .ytImageDiv img {
         width: 100%;
         height: 100%;
         aspect-ratio: 16/9;
+        position: absolute;
+        z-index: -2;
         border-radius: inherit;
     }
 
     .ytImageDiv p {
         font-size: 20px;
         margin: 0;
-        color: black;
+        color: white;
     }
 
     .ytImageDiv div {
         position: absolute;
-        top: 0;
-        right: 0;
-        background-color: lightblue;
-        padding: 2% 4%;
-        border-radius: 1px 0px 0px 500px;
+        bottom: 1%;
+        right: 3%;
+        background-color: black;
+        border-radius: 4px;
+        padding: 1px 4px;
     }
 
 .dataTextDiv {
+    background-color: lightblue;
     width: 40%;
     padding: 10px 15px 10px 15px;
 }
@@ -427,14 +460,21 @@ body {
     justify-content: space-evenly;
 }
 
+    .dataCountDiv svg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
     .dataCountDiv > div {
+        position: relative;
         display: flex;
         flex-direction: column;
         padding: 0 10px;
         align-items: center;
-        border-radius: 500px;
+        /*border-radius: 500px;*/
         background-color: #87ceeb;
-        border: 1px solid deepskyblue;
+        /*border: 1px solid deepskyblue;*/
     }
 
         .dataCountDiv > div > p {
@@ -919,3 +959,174 @@ body {
         background: #FF3D00;
         animation: 6s prog ease-in infinite;
     }
+
+.goNext {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+    .goNext p {
+        color: red;
+        text-align: center;
+        font-size: var(--step-1);
+        font-family: 'RushDriver';
+        background-size: contain;
+        background-clip: text;
+        color: transparent;
+        background-image: url("../imgs/bg1C.jpg");
+    }
+
+.ffmpegDiv {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* AUDIO CONTROLS */
+.audioPart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: antiquewhite;
+    height: 100%;
+    row-gap: 2%;
+}
+
+    .audioPart p, label {
+        font-size: var(--step-0);
+        margin: 0;
+    }
+
+    .audioPart div {
+        padding: 0 2%;
+    }
+
+.audioInformation {
+    max-height: 20%;
+    overflow: auto;
+}
+
+    .audioInformation p {
+        word-wrap: break-word;
+    }
+
+.displayAudioControlsInLine {
+    display: flex;
+    align-items: center;
+}
+
+    .displayAudioControlsInLine p {
+        width: 15%;
+    }
+
+    .displayAudioControlsInLine audio {
+        width: 85%;
+    }
+
+
+.sliderDiv {
+    display: flex;
+    align-items: center;
+}
+
+    .sliderDiv p:nth-child(1) {
+        width: 15%;
+    }
+
+    .sliderDiv div {
+        width: 80%;
+    }
+
+    .sliderDiv p:nth-child(3) {
+        width: 5%;
+    }
+
+.tripleDiv {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+    .tripleDiv div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .tripleDiv div:nth-child(1) {
+            flex-direction: column-reverse;
+        }
+
+figure {
+    display: flex;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    /*background-color: lightsteelblue;*/
+}
+
+.slidecontainer input {
+    --c: orange; /* active color */
+    --g: 8px; /* the gap */
+    --l: 5px; /* line thickness*/
+    --s: 30px; /* thumb size*/
+
+    width: 100%;
+    height: var(--s); /* needed for Firefox*/
+    --_c: color-mix(in srgb, var(--c), #000 var(--p,0%));
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+    .slidecontainer input:focus-visible,
+    .slidecontainer input:hover {
+        --p: 25%;
+    }
+
+    .slidecontainer input:active,
+    .slidecontainer input:focus-visible {
+        --_b: var(--s)
+    }
+    /* chromium */
+    .slidecontainer input[type="range" i]::-webkit-slider-thumb {
+        height: var(--s);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        box-shadow: 0 0 0 var(--_b,var(--l)) inset var(--_c);
+        border-image: linear-gradient(90deg,var(--_c) 50%,#ababab 0) 0 1/calc(50% - var(--l)/2) 100vw/0 calc(100vw + var(--g));
+        -webkit-appearance: none;
+        appearance: none;
+        transition: .3s;
+    }
+    /* Firefox */
+    .slidecontainer input[type="range"]::-moz-range-thumb {
+        height: var(--s);
+        width: var(--s);
+        background: none;
+        border-radius: 50%;
+        box-shadow: 0 0 0 var(--_b,var(--l)) inset var(--_c);
+        border-image: linear-gradient(90deg,var(--_c) 50%,#ababab 0) 0 1/calc(50% - var(--l)/2) 100vw/0 calc(100vw + var(--g));
+        -moz-appearance: none;
+        appearance: none;
+        transition: .3s;
+    }
+
+.formatsBox {
+    width: 120px;
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 18px;
+    color: #1c87c9;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 4px 4px #ccc;
+}

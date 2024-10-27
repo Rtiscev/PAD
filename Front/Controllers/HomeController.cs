@@ -1,6 +1,7 @@
 using Front.Models;
 using Front.Services;
 using Microsoft.AspNetCore.Mvc;
+using SharpCompress.Common;
 using System.Diagnostics;
 using System.Text.Json;
 using EndpointType = Front.Services.EndpointType;
@@ -12,6 +13,7 @@ namespace Front.Controllers
         private ILogger<HomeController> _logger;
         MongoService mongoService;
         private string NAME;
+        private string oldId = "";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -26,18 +28,6 @@ namespace Front.Controllers
                 ConfigureDatabase();
             });
 
-#if DEBUG
-            string binPath = AppContext.BaseDirectory;
-            Console.WriteLine("Path is:" + binPath);
-
-            // List directories
-            string[] directories = Directory.GetDirectories(binPath);
-            Console.WriteLine("Directories:");
-            foreach (string directory in directories)
-            {
-                Console.WriteLine(directory);
-            }
-#endif
             return View();
         }
 
@@ -53,6 +43,7 @@ namespace Front.Controllers
             }
         }
 
+
         [HttpPost]
         public async Task<PartialViewResult> GetGeneralData([FromBody] string ytLink)
         {
@@ -60,238 +51,140 @@ namespace Front.Controllers
             GeneralData? generalData = JsonSerializer.Deserialize<GeneralData>(response);
             return PartialView("_YoutubeData", generalData);
         }
-
         [HttpPost]
         public async Task<PartialViewResult> GetVideoFormats([FromBody] string ytLink)
         {
             string response = await UtilityService.GetResponse(EndpointType.Video_Formats, ytLink);
             var videoFormats = JsonSerializer.Deserialize<VideoData[]>(response);
+            ViewBag.type = "Video";
             return PartialView("_FormatsData", videoFormats);
         }
-
         [HttpPost]
         public async Task<PartialViewResult> GetAudioFormats([FromBody] string ytLink)
         {
             string response = await UtilityService.GetResponse(EndpointType.Audio_Formats, ytLink);
             var audioFormats = JsonSerializer.Deserialize<AudioData[]>(response);
+            ViewBag.type = "Audio";
             return PartialView("_FormatsData", audioFormats);
         }
-
         [HttpPost]
         public async Task<PartialViewResult> Get2BestFormats([FromBody] string ytLink)
         {
-            List<AudioData> formats = new();
-
+            string response = await UtilityService.GetResponse(EndpointType.Best_Formats, ytLink);
+            Console.WriteLine(response);
+            var formats = JsonSerializer.Deserialize<BestFormats>(response);
+            Console.WriteLine(formats);
             return PartialView("_FormatsData", formats);
         }
+        [HttpPost]
+        public async Task<IActionResult> DownloadFileById([FromBody] DownloadRequest request)
+        {
+            string response = "nope";
+            if (oldId != request.Id)
+            {
+                oldId = request.Id;
+                response = await UtilityService.GetResponseDownload(EndpointType.General_Data, request.YtLink, request.Id);
+            }
+            return Json(new { response });
+        }
 
-        //struct FileTotalData
-        //{
-        //    public byte[] fileBytes;
-        //    public string contentType;
-        //    public string fileName;
-        //}
+        public class DownloadRequest
+        {
+            public string Id { get; set; }
+            public string YtLink { get; set; }
+        }
 
-        //private async Task<FileTotalData> GetResponseDownload(string id)
-        //{
-        //    try
-        //    {
-        //        HttpClient client = new();
-        //        using HttpResponseMessage response = await client.GetAsync($"http://ytdlp:8080/api/downloadFileLocally?id={id}");
+        [HttpPost]
+        public async Task<IActionResult> GetBytesFromFile([FromBody] string fileID)
+        {
+            var fileData = await mongoService.GetByteArrayFromFile(fileID);
+            var base64String = System.Convert.ToBase64String(fileData.Data);
+            Console.WriteLine("sucess");
 
-        //        string _contentType = response.Content.Headers.ContentType.ToString();
-        //        string _fileName = response.Content.Headers.ContentDisposition?.FileName?.Trim('\"') ?? "downloaded_file";
-        //        byte[] _fileBytes = await response.Content.ReadAsByteArrayAsync();
+            return Json(new
+            {
+                bytes = base64String,
+                contentType = fileData.Type
+            });
+        }
 
-        //        FileTotalData fileTotalData = new() { contentType = _contentType, fileBytes = _fileBytes, fileName = _fileName };
-        //        return fileTotalData;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewBag.Response = ex.Message;
-        //        return new();
-        //    }
-        //}
+        // FFMPEG TIME BOIS
+        [HttpPost]
+        public async Task<IActionResult> GetAudioInformation([FromBody] string fileID)
+        {
+            string response = await UtilityService.GetResponseAudioInfo(fileID);
+            return Json(response);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> GetAudioVisual([FromBody] string fileID)
+        {
+            Console.WriteLine("GetAudioVisual FILEID:" + fileID);
+            // get the file id of uploaded image (Audio waves)
+            string response = await UtilityService.GetResponseImageName(fileID);
+            Console.WriteLine("GetAudioVisual RESPONSE ID:" + response);
 
+            // get byte array from that file 
+            var fileData = await mongoService.GetByteArrayFromFileNEW(response);
 
-        //[HttpPost]
-        //public async Task<IActionResult> GetVideoById([FromBody] VDInfo data)
-        //{
-        //    try
-        //    {
-        //        HttpClient client = new();
-        //        using HttpResponseMessage response = await client.GetAsync($"http://ytdlp:8080/api/downloadByVideoID?videoUrl={data.ytLink}&vQualityID={data.selectedValue}");
-        //        var data1 = await response.Content.ReadAsStringAsync();
+            // create the base64string
+            var base64String = System.Convert.ToBase64String(fileData.Data);
+            Console.WriteLine("sucess");
 
-        //        // get 9th
-        //        string asdasdas = "[download] Destination: /app/downloads/";
-        //        int index = data1.IndexOf(asdasdas);
+            return Json(new
+            {
+                bytes = base64String,
+                contentType = fileData.Type
+            });
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetAudioVisual2([FromBody] string fileID)
+        {
+            Console.WriteLine("GetAudioVisual2 FILEID:" + fileID);
+            // get the file id of uploaded image (Audio waves)
+            string response = await UtilityService.GetResponseImageName(fileID);
+            Console.WriteLine("GetAudioVisual2 RESPONSE ID:" + response);
 
-        //        if (index != -1)
-        //        {
-        //            // Find the index of the substring starting from startIndex
-        //            int index1 = data1.IndexOf('\n', index);
-        //            string ggg = NAME = data1[(index + asdasdas.Length)..index1];
-        //            Console.WriteLine(ggg);
+            // get byte array from that file 
+            var fileData = await mongoService.GetByteArrayFromFileSimple(response);
 
+            // create the base64string
+            var base64String = System.Convert.ToBase64String(fileData);
+            Console.WriteLine("sucess");
 
-        //            /////////////
-        //            HttpClient client2 = new();
-        //            using HttpResponseMessage response3 = await client.GetAsync($"http://ytdlp:8080/api/upload?videoName={NAME}");
-        //            var data3 = await response3.Content.ReadAsStringAsync();
-        //            /////////////
+            return Json(new { bytes = base64String });
+        }
+        [HttpPost]
+        public async Task<IActionResult> ApplyEffects([FromBody] Effects effects)
+        {
+            //Console.WriteLine("ApplyEffects id:" + effects.id);
+            //Console.WriteLine("ApplyEffects volume:" + effects.volume);
+            //Console.WriteLine("ApplyEffects speed:" + effects.speed);
+            //Console.WriteLine("ApplyEffects formar:" + effects.format);
+            //Console.WriteLine("ApplyEffects isnorm:" + effects.isNorm);
 
+            // get the audio file from DB, download it locally on MSFFMpeg
+            // apply effects to it, save it locally, then upload it to the DB
+            // GetResponseEffects returns id of that file, saved in DB
+            string response = await UtilityService.GetResponseEffects(effects);
+            Console.WriteLine("GetAudioVisual RESPONSE ID:" + response);
 
+            // ugh...
+            // now need to get the audio source
+            // and the audiowave image 
+            // will be better if this method only gets the file, or not? hm
+            // alr
+            // pass the converted file id obtained previously
+            var fileData = await mongoService.GetByteArrayFromFileSimple(response);
+            var base64String = System.Convert.ToBase64String(fileData);
+            Console.WriteLine("sucess");
 
-        //            using HttpResponseMessage response1 = await client.GetAsync($"http://ytdlp:8080/api/upload?videoName={NAME}");
-        //            await response1.Content.ReadAsStringAsync();
-
-        //            // Get the current working directory
-        //            string projectDirectory = Directory.GetCurrentDirectory();
-
-        //            // Output directory for downloads (e.g., "downloads" folder)
-        //            string outputDirectory = Path.Combine(projectDirectory, "downloads");
-
-        //            // Ensure the output directory exists
-        //            Directory.CreateDirectory(outputDirectory);
-
-        //            // Set the video name and file path
-        //            string videoName = NAME; // Change this to your desired filename
-        //            string filePath = Path.Combine(outputDirectory, videoName);
-
-
-        //            // Path to the yt-dlp binary
-        //            string ytDlpPath = "curl"; // Modify if necessary 
-
-        //            // Command to run yt-dlp and retrieve metadata
-        //            string ytDlpArguments = $"-X GET {response.Content} -H \"accept: application/json\" --output \"{filePath}.mp4\"";
-
-        //            // Create the process to execute the command
-        //            ProcessStartInfo processStartInfo = new ProcessStartInfo
-        //            {
-        //                FileName = ytDlpPath,
-        //                Arguments = ytDlpArguments,
-        //                RedirectStandardOutput = true,
-        //                RedirectStandardError = true,
-        //                UseShellExecute = false,
-        //                CreateNoWindow = true
-        //            };
-
-        //            // Start the process
-        //            using (Process process = new Process { StartInfo = processStartInfo })
-        //            {
-        //                process.Start();
-
-        //                // Read the output from yt-dlp
-        //                string output = process.StandardOutput.ReadToEnd();
-        //                string errorOutput = process.StandardError.ReadToEnd();
-
-        //                process.WaitForExit();
-
-        //                // Print the outputs
-        //                Console.WriteLine("Output:\n" + output);
-        //                if (!string.IsNullOrEmpty(errorOutput))
-        //                {
-        //                    Console.WriteLine("Error:\n" + errorOutput);
-        //                }
-        //            }
-        //        }
-
-        //        //Console.WriteLine(data1);
-        //        return Ok();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewBag.Response = ex.Message;
-        //        return BadRequest();
-        //    }
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> GetAudioById([FromBody] VDInfo data)
-        //{
-        //    try
-        //    {
-        //        HttpClient client = new();
-        //        using HttpResponseMessage response = await client.GetAsync($"http://ytdlp:8080/api/downloadByAudioID?videoUrl={data.ytLink}&aQualityID={data.selectedValue}");
-        //        await response.Content.ReadAsStringAsync();
-        //        return Ok();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewBag.Response = ex.Message;
-        //        return BadRequest();
-        //    }
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> DownloadFile([FromBody] string fileName)
-        //{
-        //    try
-        //    {
-        //        HttpClient client = new();
-        //        using HttpResponseMessage response = await client.GetAsync($"http://ytdlp:8080/api/upload?videoName={fileName}");
-        //        await response.Content.ReadAsStringAsync();
-
-        //        // Get the current working directory
-        //        string projectDirectory = Directory.GetCurrentDirectory();
-
-        //        // Output directory for downloads (e.g., "downloads" folder)
-        //        string outputDirectory = Path.Combine(projectDirectory, "downloads");
-
-        //        // Ensure the output directory exists
-        //        Directory.CreateDirectory(outputDirectory);
-
-        //        // Set the video name and file path
-        //        string videoName = fileName; // Change this to your desired filename
-        //        string filePath = Path.Combine(outputDirectory, videoName);
-
-
-        //        // Path to the yt-dlp binary
-        //        string ytDlpPath = "curl"; // Modify if necessary 
-
-        //        // Command to run yt-dlp and retrieve metadata
-        //        string ytDlpArguments = $"-X GET {response.Content} -H \"accept: application/json\" --output \"{filePath}.mp4\"";
-
-        //        // Create the process to execute the command
-        //        ProcessStartInfo processStartInfo = new ProcessStartInfo
-        //        {
-        //            FileName = ytDlpPath,
-        //            Arguments = ytDlpArguments,
-        //            RedirectStandardOutput = true,
-        //            RedirectStandardError = true,
-        //            UseShellExecute = false,
-        //            CreateNoWindow = true
-        //        };
-
-        //        // Start the process
-        //        using (Process process = new Process { StartInfo = processStartInfo })
-        //        {
-        //            process.Start();
-
-        //            // Read the output from yt-dlp
-        //            string output = process.StandardOutput.ReadToEnd();
-        //            string errorOutput = process.StandardError.ReadToEnd();
-
-        //            process.WaitForExit();
-
-        //            // Print the outputs
-        //            Console.WriteLine("Output:\n" + output);
-        //            if (!string.IsNullOrEmpty(errorOutput))
-        //            {
-        //                Console.WriteLine("Error:\n" + errorOutput);
-        //            }
-        //        }
-
-        //        //"curl - X GET \"https://file.io/9tC2edSTmXMY\" - H \"accept: application/json\"--output filename.ext";
-        //        return Ok();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewBag.Response = ex.Message;
-        //        return BadRequest();
-        //    }
-        //}
+            return Json(new
+            {
+                bytes = base64String,
+                contentType = "audio/mp3",
+                id = response
+            });
+        }
     }
 }

@@ -25,7 +25,7 @@
                     <label for="@id" class="option">@audioformat.ext @audioformat.fileSize @audioformat.tbr</label>
                 }
             }
-            else
+            else if (Model is IEnumerable<VideoData>)
             {
                 @foreach (var videoFormat in Model)
                 {
@@ -41,6 +41,23 @@
                     }
                     <label for="@id" class="option">@videoFormat.ext @videoFormat.resolution @videoFormat.fps @videoFormat.fileSize</label>
                 }
+            }
+            else if (Model is BestFormats)
+            {
+                var id1 = "opt" + Model.audio[0].id + "|" + Model.video[0].id;
+                var id2 = "opt" + Model.audio[1].id + "|" + Model.video[1].id;
+
+                <input class="selectopt" name="test" type="radio" id="@id1" checked>
+                <label for="@id1" class="option">
+                    @Model.audio[0].ext  @Model.audio[0].tbr @Model.audio[0].fileSize<br />
+                    @Model.video[0].ext @Model.video[0].rezolution @Model.video[0].fps @Model.video[0].fileSize
+                </label>
+
+                <input class="selectopt" name="test" type="radio" id="@id2">
+                <label for="@id2" class="option">
+                    @Model.audio[1].ext  @Model.audio[1].tbr @Model.audio[1].fileSize<br />
+                    @Model.video[1].ext @Model.video[1].rezolution @Model.video[1].fps @Model.video[1].fileSize
+                </label>
             }
         </div>
     </div>

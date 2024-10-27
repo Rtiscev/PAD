@@ -1,4 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER root 
+RUN apt-get update -y && apt-get install -y iputils-ping
 USER app
 WORKDIR /app
 

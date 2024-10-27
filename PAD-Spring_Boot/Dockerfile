@@ -17,7 +17,7 @@ FROM eclipse-temurin:17-jdk
 
 # Install Python3 and pip3 using apt-get
 RUN apt-get update \
-    && apt-get install -y python3 python3-pip \
+    && apt-get install -y python3 python3-pip iputils-ping \
     && pip3 install yt-dlp  --break-system-packages
 
 # Set the working directory in the container

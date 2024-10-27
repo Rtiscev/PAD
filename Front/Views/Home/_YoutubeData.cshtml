@@ -4,10 +4,18 @@
 @if (Model is not null)
 {
     <div class="ytImageDiv">
+        <svg class="polyline" viewBox="0 0 100 100" style="top: 0px;" preserveAspectRatio="xMinYMin meet">
+            <polyline points="20 0 0 0 0 20" style="fill:none; stroke:whitesmoke; stroke-width:3%; stroke-linecap:round; stroke-linejoin:round;" />
+        </svg>
+
         <img src="@Model.thumbnail" />
         <div>
             <p>@Model.duration_string</p>
         </div>
+
+        <svg class="polyline" viewBox="0 0 100 100" style="bottom: 0px;" preserveAspectRatio="xMinYMin meet">
+            <polyline points="20 100 0 100 0 80" style="fill:none; stroke:whitesmoke; stroke-width:3%; stroke-linecap:round; stroke-linejoin:round;" />
+        </svg>
     </div>
     <div class="dataTextDiv">
         <h2 id="Title" style="text-align:center">@Model.title</h2>
@@ -19,6 +27,9 @@
 
         <div class="dataCountDiv">
             <div>
+                <svg class="polyline" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                    <polyline points="50 0 0 0 0 50" style="fill:none; stroke:whitesmoke; stroke-width:3%; stroke-linecap:round; stroke-linejoin:round;" />
+                </svg>
                 <p>👀 </p>
                 @if (@Model.view_count != 0)
                 {
@@ -28,8 +39,14 @@
                 {
                     <p>🚫</p>
                 }
+                <svg class="polyline" viewBox="0 0 100 100" preserveAspectRatio="xMaxYMax meet">
+                    <polyline points="50 100 100 100 100 50" style="fill:none; stroke:whitesmoke; stroke-width:3%; stroke-linecap:round; stroke-linejoin:round;" />
+                </svg>
             </div>
             <div>
+                <svg class="polyline" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                    <polyline points="50 0 0 0 0 50" style="fill:none; stroke:whitesmoke; stroke-width:3%; stroke-linecap:round; stroke-linejoin:round;" />
+                </svg>
                 <p>👍</p>
                 @if (@Model.like_count != 0)
                 {
@@ -39,8 +56,14 @@
                 {
                     <p>🚫</p>
                 }
+                <svg class="polyline" viewBox="0 0 100 100" preserveAspectRatio="xMaxYMax meet">
+                    <polyline points="50 100 100 100 100 50" style="fill:none; stroke:whitesmoke; stroke-width:3%; stroke-linecap:round; stroke-linejoin:round;" />
+                </svg>
             </div>
             <div>
+                <svg class="polyline" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                    <polyline points="50 0 0 0 0 50" style="fill:none; stroke:whitesmoke; stroke-width:3%; stroke-linecap:round; stroke-linejoin:round;" />
+                </svg>
                 <p>💬</p>
                 @if (@Model.comment_count != 0)
                 {
@@ -50,6 +73,9 @@
                 {
                     <p>🚫</p>
                 }
+                <svg class="polyline" viewBox="0 0 100 100" preserveAspectRatio="xMaxYMax meet">
+                    <polyline points="50 100 100 100 100 50" style="fill:none; stroke:whitesmoke; stroke-width:3%; stroke-linecap:round; stroke-linejoin:round;" />
+                </svg>
             </div>
         </div>
 

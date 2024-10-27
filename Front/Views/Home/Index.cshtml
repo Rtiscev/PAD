@@ -7,7 +7,9 @@
     <title>Pad Project</title>
     <link rel="stylesheet" href="~/css/main.css">
     <link rel="stylesheet" href="~/css/fonts.css">
-    <link rel="stylesheet" href="~/css/animations.css">
+    <link rel="stylesheet" href="~/css/animations.css" >
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body>
@@ -49,13 +51,13 @@
         <div class="animationDiv">
             <canvas id="animationCanvas"></canvas>
         </div>
-        <div class="titleDiv">
-            <p>
-                <span>Pad Project.</span>
-                <br />Download Audio and Video
-            </p>
-        </div>
-        <div class="mainDiv">
+        @* <div class="titleDiv">
+        <p>
+        <span>Pad Project.</span>
+        <br />Download Audio and Video
+        </p>
+        </div> *@
+        <div class="ytdlpDiv">
             <div class="enterUrlDiv">
                 <input id="youtubeURL" placeholder="Paste YouTube Url (eg. https://www.youtube.com/watch?v=dQw4w9WgXcQ)" />
                 <button onclick="GetInformation()">Start</button>
@@ -75,10 +77,19 @@
                 </div>
                 <span class="liloader"></span>
             </div>
+
+            <div class="goNext dontShow">
+                <p>
+                    File is ready!<br /> Scroll down to further process it or download it.
+                </p>
+            </div>
+        </div>
+
+        <div class="ffmpegDiv">
+            <partial name="_FFmpegPart"></partial>
         </div>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/typeWriter.js"></script>
     <script src="~/js/animation.js"></script>
     <script src="~/js/main.js"></script>

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,75 @@ import java.util.*;
 @RestController
 @RequestMapping("/api")
 public class DownloadController {
+
+
+    private String processBuilder(ProcessBuilder processBuilder) {
+        processBuilder.redirectErrorStream(true); // Redirect errors to standard output
+
+        // Start the process
+        Process process;
+        try {
+            process = processBuilder.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Read the output from yt-dlp
+        StringBuilder output = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+//        String key = "\"link\":\"";
+//        int startIndex = output.indexOf(key) + key.length();
+//        int endIndex = output.indexOf("\"", startIndex);
+//
+//        String link = output.substring(startIndex, endIndex);
+//        System.out.println("Link: " + link);
+
+        // Wait for the process to complete
+        int exitCode;
+        try {
+            exitCode = process.waitFor();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if (exitCode != 0) {
+            return "oops";
+        }
+
+        return output.toString();
+    }
+
+    // Метод для создания карты формата для аудио
+    private Map<String, Object> createFormatMap(AudioData audioData) {
+        Map<String, Object> formatMap = new LinkedHashMap<>(); // Используем LinkedHashMap для сохранения порядка
+        formatMap.put("id", audioData.getId());
+        formatMap.put("ext", audioData.getExt());
+        formatMap.put("tbr", audioData.getTBR());
+        formatMap.put("fileSize", audioData.getFileSize());
+        return formatMap;
+    }
+
+
+    // Метод для создания карты формата для видео
+    private Map<String, Object> createFormatMap(Data videoData) {
+        Map<String, Object> formatMap = new LinkedHashMap<>(); // Используем LinkedHashMap для сохранения порядка
+        formatMap.put("id", videoData.getId());
+        formatMap.put("ext", videoData.getExt());
+        formatMap.put("rezolution", videoData.getResolution());
+        formatMap.put("fps", videoData.getFps());
+        formatMap.put("fileSize", videoData.getFileSize());
+        return formatMap;
+    }
+
+
+
 
     @GetMapping("/upload")
     @ResponseBody
@@ -199,104 +269,104 @@ public class DownloadController {
         return jsonResult;
     }
 
-    @GetMapping("/listVideoFormats") // Изменен на GET
-    @ResponseBody
-    public String GetVideoFormats(@RequestParam String videoUrl) throws IOException, InterruptedException {
-
-        int asd;
-        // Полный путь к бинарному файлу yt-dlp
-        String ytDlpPath = "yt-dlp"; // Измените это, если необходимо
-
-        // Получаем текущую рабочую директорию (т.е. корень вашего проекта)
-        String projectDirectory = System.getProperty("user.dir");
-
-        // Создаем команду для запуска yt-dlp
-        ProcessBuilder processBuilder = new ProcessBuilder(ytDlpPath, "-F", videoUrl);
-        processBuilder.redirectErrorStream(true); // Перенаправляем ошибки в стандартный вывод
-
-        // Запускаем процесс
-        Process process = processBuilder.start();
-
-        // Читаем вывод от yt-dlp
-        StringBuilder output = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
-            }
-        }
-
-        String line;
-        ArrayList<String> _vs = new ArrayList<String>();
-        String vOnly = "video only";
-
-        Dictionary<String, Data> dic = new Hashtable<>();
-
-        try (BufferedReader reader = new BufferedReader(new StringReader(output.toString()))) {
-            while ((line = reader.readLine()) != null) {
-                if (line.contains(vOnly)) {
-                    _vs.add(line); // Add line for video only
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Videos:");
-        for (int i = _vs.size() - 1; i >= 0; i--) {
-            LinkedHashSet<String> ggg = new LinkedHashSet<>();
-            Data d = new Data();
-            String[] res = _vs.get(i).split(" ");
-
-            for (String v : res) {
-                if (v.equals("|") || v.equals("~") || v.equals("") || v.equals("2")) {
-                    continue;
-                } else {
-                    ggg.add(v);
-                }
-            }
-            try {
-                String[] copy = ggg.toArray(new String[0]);
-                d.id = copy[0];
-                d.ext = copy[1];
-                d.resolution = copy[2];
-                d.fps = copy[3];
-                d.fileSize = copy[4];
-
-                if (d.ext.equals("webm")) continue;
-
-                String key = d.resolution + d.fps;
-
-                if (dic.get(key) == null) {
-                    dic.put(key, d);
-                }
-            } catch (Exception ex) {
-                // Handle exception if needed
-            }
-        }
-
-
-        // Convert Dictionary to List<Data>
-        List<Data> dataList = new ArrayList<>();
-        Enumeration<String> keys = dic.keys();
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            dataList.add(dic.get(key)); // Add the Data objects to the list
-        }
-
-        // Convert List<Data> to JSON using ObjectMapper
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dataList);
-
-            // Print the JSON string
-            return json;
-//            System.out.println(json);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "eh";
-    }
+//    @GetMapping("/listVideoFormats") // Изменен на GET
+//    @ResponseBody
+//    public String GetVideoFormats(@RequestParam String videoUrl) throws IOException, InterruptedException {
+//
+//        int asd;
+//        // Полный путь к бинарному файлу yt-dlp
+//        String ytDlpPath = "yt-dlp"; // Измените это, если необходимо
+//
+//        // Получаем текущую рабочую директорию (т.е. корень вашего проекта)
+//        String projectDirectory = System.getProperty("user.dir");
+//
+//        // Создаем команду для запуска yt-dlp
+//        ProcessBuilder processBuilder = new ProcessBuilder(ytDlpPath, "-F", videoUrl);
+//        processBuilder.redirectErrorStream(true); // Перенаправляем ошибки в стандартный вывод
+//
+//        // Запускаем процесс
+//        Process process = processBuilder.start();
+//
+//        // Читаем вывод от yt-dlp
+//        StringBuilder output = new StringBuilder();
+//        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                output.append(line).append("\n");
+//            }
+//        }
+//
+//        String line;
+//        ArrayList<String> _vs = new ArrayList<String>();
+//        String vOnly = "video only";
+//
+//        Dictionary<String, Data> dic = new Hashtable<>();
+//
+//        try (BufferedReader reader = new BufferedReader(new StringReader(output.toString()))) {
+//            while ((line = reader.readLine()) != null) {
+//                if (line.contains(vOnly)) {
+//                    _vs.add(line); // Add line for video only
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println("Videos:");
+//        for (int i = _vs.size() - 1; i >= 0; i--) {
+//            LinkedHashSet<String> ggg = new LinkedHashSet<>();
+//            Data d = new Data();
+//            String[] res = _vs.get(i).split(" ");
+//
+//            for (String v : res) {
+//                if (v.equals("|") || v.equals("~") || v.equals("") || v.equals("2")) {
+//                    continue;
+//                } else {
+//                    ggg.add(v);
+//                }
+//            }
+//            try {
+//                String[] copy = ggg.toArray(new String[0]);
+//                d.id = copy[0];
+//                d.ext = copy[1];
+//                d.resolution = copy[2];
+//                d.fps = copy[3];
+//                d.fileSize = copy[4];
+//
+//                if (d.ext.equals("webm")) continue;
+//
+//                String key = d.resolution + d.fps;
+//
+//                if (dic.get(key) == null) {
+//                    dic.put(key, d);
+//                }
+//            } catch (Exception ex) {
+//                // Handle exception if needed
+//            }
+//        }
+//
+//
+//        // Convert Dictionary to List<Data>
+//        List<Data> dataList = new ArrayList<>();
+//        Enumeration<String> keys = dic.keys();
+//        while (keys.hasMoreElements()) {
+//            String key = keys.nextElement();
+//            dataList.add(dic.get(key)); // Add the Data objects to the list
+//        }
+//
+//        // Convert List<Data> to JSON using ObjectMapper
+//        try {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dataList);
+//
+//            // Print the JSON string
+//            return json;
+////            System.out.println(json);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return "eh";
+//    }
 
     @GetMapping("/listAudioFormats") // Изменен на GET
     @ResponseBody
@@ -394,9 +464,9 @@ public class DownloadController {
         return "eh";
     }
 
-    @GetMapping("/downloadByVideoID") // Изменен на GET
+    @GetMapping("/downloadFileByID") // Изменен на GET
     @ResponseBody
-    public String GetOnlyVideoById(@RequestParam String videoUrl, @RequestParam int vQualityID) throws IOException, InterruptedException {
+    public String GetOnlyFileById(@RequestParam String videoUrl, @RequestParam String qID) throws IOException, InterruptedException {
         // Полный путь к бинарному файлу yt-dlp
         String ytDlpPath = "yt-dlp"; // Измените это, если необходимо
 
@@ -405,6 +475,19 @@ public class DownloadController {
 
         // Указываем директорию для вывода (например, папка "downloads")
         Path outputDirectory = Paths.get(projectDirectory, "downloads");
+
+        // ------- CHECK FILES THAT ALREADY EXIST
+        ArrayList<File> files = new ArrayList<File>();
+        File folder = new File(String.valueOf(outputDirectory));
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    files.add(file);
+                }
+            }
+        }
 
         // Убедимся, что директория для вывода существует
         if (Files.notExists(outputDirectory)) {
@@ -415,7 +498,7 @@ public class DownloadController {
         String outputTemplate = outputDirectory + "/%(title)s.%(ext)s";
 
         // Создаем команду для запуска yt-dlp
-        ProcessBuilder processBuilder = new ProcessBuilder(ytDlpPath, "-f", Integer.toString(vQualityID), "-o", outputTemplate, videoUrl);
+        ProcessBuilder processBuilder = new ProcessBuilder(ytDlpPath, "-f",qID, "-o", outputTemplate, videoUrl);
         processBuilder.redirectErrorStream(true); // Перенаправляем ошибки в стандартный вывод
 
         // Запускаем процесс
@@ -432,57 +515,43 @@ public class DownloadController {
         // Ждем завершения процесса
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            return "oops";
+            return "yt-dlp fail";
         }
 
-        // Возвращаем вывод команды
-        return output.toString();
-    }
+        // ------- CHECK FILES THAT ALREADY EXIST
+        ArrayList<File> files2 = new ArrayList<File>();
+        File[] listOfFiles2 = folder.listFiles();
 
-
-    @GetMapping("/downloadByAudioID") // Изменен на GET
-    @ResponseBody
-    public String GetOnlyAudioById(@RequestParam String videoUrl, @RequestParam int aQualityID) throws IOException, InterruptedException {
-        // Полный путь к бинарному файлу yt-dlp
-        String ytDlpPath = "yt-dlp"; // Измените это, если необходимо
-
-        // Получаем текущую рабочую директорию (т.е. корень вашего проекта)
-        String projectDirectory = System.getProperty("user.dir");
-
-        // Указываем директорию для вывода (например, папка "downloads")
-        Path outputDirectory = Paths.get(projectDirectory, "downloads");
-
-        // Убедимся, что директория для вывода существует
-        if (Files.notExists(outputDirectory)) {
-            Files.createDirectory(outputDirectory);
-        }
-
-        // Создаем шаблон вывода для yt-dlp, сохраняем файлы в указанной папке
-        String outputTemplate = outputDirectory + "/%(title)s.%(ext)s";
-
-        // Создаем команду для запуска yt-dlp
-        ProcessBuilder processBuilder = new ProcessBuilder(ytDlpPath, "-f", Integer.toString(aQualityID), "-o", outputTemplate, videoUrl);
-        processBuilder.redirectErrorStream(true); // Перенаправляем ошибки в стандартный вывод
-
-        // Запускаем процесс
-        Process process = processBuilder.start();
-
-        // Читаем вывод от yt-dlp
-        StringBuilder output = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
+        for (File file : listOfFiles2) {
+            if (file.isFile()) {
+                files2.add(file);
             }
         }
-        // Ждем завершения процесса
-        int exitCode = process.waitFor();
-        if (exitCode != 0) {
-            return "oops";
+
+        HashSet<Object> set2 = new HashSet<>(Arrays.asList(files2.toArray()));
+        Set<Object> difference = new HashSet<>(set2);
+        if (!files.isEmpty()) {
+            // Convert arrays to sets
+            HashSet<Object> set1 = new HashSet<>(Arrays.asList(files.toArray()));
+
+            // Difference (set1 - set2)
+            difference.removeAll(set1);
         }
 
+        String result;
+        if (difference.isEmpty()) {
+            result = "file exists!";
+        } else {
+            File found = (File) difference.stream().findFirst().get();
+            String ID = fileService.addSimpleFile(found.getAbsolutePath());
+            // Возвращаем вывод команды
+            result = ID;
+//            result = found.getAbsolutePath() + " " + ID;
+        }
+        return result;
+
         // Возвращаем вывод команды
-        return output.toString();
+//        return output.toString();
     }
 
     @GetMapping("/downloadSimple") // Изменен на GET
@@ -573,7 +642,6 @@ public class DownloadController {
         return result;
     }
 
-
     @Autowired
     private FileService fileService;
 
@@ -589,6 +657,158 @@ public class DownloadController {
                 .contentType(MediaType.parseMediaType(loadFile.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + loadFile.getFilename() + "\"")
                 .body(new ByteArrayResource(loadFile.getFile()));
+    }
+
+
+    @GetMapping("/listBestFormats")
+    @ResponseBody
+    public ResponseEntity<String> getBestFormats(@RequestParam String videoUrl) {
+        try {
+            // Вызываем метод GetAudioFormats и получаем строку JSON
+            String audioFormatsJson = GetAudioFormats(videoUrl);
+            // Вызываем метод GetVideoFormats и получаем строку JSON
+            String videoFormatsJson = GetVideoFormats(videoUrl);
+
+            // Создаем ObjectMapper для работы с JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Десериализуем JSON строку в список объектов AudioData
+            List<AudioData> audioDataList = objectMapper.readValue(
+                    audioFormatsJson,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, AudioData.class)
+            );
+
+            // Десериализуем JSON строку в список объектов VideoData
+            List<Data> videoDataList = objectMapper.readValue(
+                    videoFormatsJson,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, Data.class)
+            );
+
+            // Проверяем, что в списке достаточно данных (не менее 2 форматов)
+            if (audioDataList.size() < 2 || videoDataList.size() < 2) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("{\"error\": \"Less than two audio or video formats found.\"}");
+            }
+
+            // Создаем результат в формате JSON
+            Map<String, Object> resultMap = new LinkedHashMap<>();
+
+            // Создаем списки для аудио и видео форматов
+            List<Map<String, Object>> audioFormats = new ArrayList<>();
+            List<Map<String, Object>> videoFormats = new ArrayList<>();
+
+            // Добавляем лучшие аудиоформаты
+            audioFormats.add(createFormatMap(audioDataList.get(0)));
+            audioFormats.add(createFormatMap(audioDataList.get(1)));
+
+            // Добавляем лучшие видеоформаты
+            videoFormats.add(createFormatMap(videoDataList.get(0)));
+            videoFormats.add(createFormatMap(videoDataList.get(1)));
+
+            // Заполняем результат
+            resultMap.put("audio", audioFormats);
+            resultMap.put("video", videoFormats);
+
+            // Преобразуем результат в JSON строку
+            String resultJson = objectMapper.writeValueAsString(resultMap);
+
+            // Возвращаем результат как JSON
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(resultJson);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\": \"Error processing audio or video formats\"}");
+        }
+    }
+
+
+
+    @GetMapping("/listVideoFormats")
+    @ResponseBody
+    public String GetVideoFormats(@RequestParam String videoUrl) {
+        String ytDlpPath = "yt-dlp"; // Измените это, если необходимо
+        ProcessBuilder processBuilder = new ProcessBuilder(ytDlpPath, "-F", videoUrl);
+        processBuilder(processBuilder);
+
+        ArrayList<String> _vs = new ArrayList<>();
+        String vOnly = "video only";
+        dictionary(processBuilder, _vs, vOnly);
+
+        Map<String, Data> dic = new HashMap<>();
+
+        for (int i = _vs.size() - 1; i >= 0; i--) {
+            List<String> ggg = new ArrayList<>();
+            Data d = new Data();
+            String[] res = _vs.get(i).split(" ");
+
+            for (String v : res) {
+                if (!v.equals("|") && !v.equals("~") && !v.isEmpty() && !v.equals("2")) {
+                    ggg.add(v);
+                }
+            }
+            try {
+                String[] copy = ggg.toArray(new String[0]);
+                d.id = copy[0];
+                d.ext = copy[1];
+                d.resolution = copy[2];
+                d.fps = copy[3];
+                d.fileSize = copy[4];
+
+                if (d.ext.equals("webm")) continue;
+
+                String key = d.resolution + d.fps;
+
+                if (dic.get(key) == null) {
+                    dic.put(key, d);
+                }
+            } catch (Exception ex) {
+                // Handle exception if needed
+            }
+        }
+
+        // Convert Dictionary to List<Data>
+        List<Data> dataList = new ArrayList<>(dic.values());
+
+        // Sort dataList by resolution in descending order
+        dataList.sort((data1, data2) -> {
+            int res1 = parseResolution(data1.resolution);
+            int res2 = parseResolution(data2.resolution);
+            return Integer.compare(res2, res1); // Sort in descending order
+        });
+
+        // Convert List<Data> to JSON
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dataList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "eh";
+    }
+
+    // Helper method to parse resolution strings like "1080p" into integers
+    private int parseResolution(String resolution) {
+        try {
+            return Integer.parseInt(resolution.replaceAll("[^0-9]", ""));
+        } catch (NumberFormatException e) {
+            return 0; // Fallback if resolution can't be parsed
+        }
+    }
+
+    private void dictionary(ProcessBuilder processBuilder, ArrayList<String> _vs, String vOnly) {
+        String line;
+        try (BufferedReader reader = new BufferedReader(new StringReader(processBuilder(processBuilder)))) {
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(vOnly)) {
+                    _vs.add(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
