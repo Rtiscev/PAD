@@ -1,0 +1,140 @@
+﻿<div class="audioPart">
+    <div class="audioInformation"></div>
+
+    <div class="displayAudioControlsInLine">
+        <p>Original file</p>
+        <audio controls id="audioOriginal">
+            <source />
+        </audio>
+    </div>
+
+    <div class="visualRepresentation">
+        <img style="width:100%;" />
+    </div>
+
+    <div class="sliderDiv">
+        <p>Speed up</p>
+        <div class="slidecontainer">
+            <input type="range" min="0.5" max="2" value="1" step="0.1" class="slider" id="myRange">
+        </div>
+        <p>Value</p>
+    </div>
+
+    <div class="tripleDiv">
+        <div>
+            <p>Choose new format</p>
+            <select class="formatsBox">
+                <option value="mp3">MP3</option>
+                <option value="wav">WAV</option>
+                <option value="flac">FLAC</option>
+                <option value="webm">WebM</option>
+                <option value="aac">AAC</option>
+            </select>
+        </div>
+
+        <div>
+            <input type="checkbox" id="normVolume" name="normVolume" value="normVolume">
+            <label for="normVolume">Normalize Volume</label>
+            <br>
+        </div>
+    </div>
+
+    <div class="sliderDiv">
+        <p>Change volume</p>
+        <div class="slidecontainer">
+            <input type="range" min="0.5" max="2" value="1" step="0.1" class="slider" id="myRange">
+        </div>
+        <p>Value</p>
+    </div>
+
+    <div class="getNewFile">
+        <button>Get new file!</button>
+    </div>
+
+    <div class="displayAudioControlsInLine">
+        <p>Result file</p>
+        <audio controls id="audioFinal">
+            <source />
+        </audio>
+    </div>
+
+    <div class="visualRepresentation2">
+        <img style="width:100%;" />
+    </div>
+</div>
+
+<script>
+    let firstSliderTxt = $('.sliderDiv:eq(0)').children().eq(2);
+    let secondSliderTxt = $('.sliderDiv:eq(1)').children().eq(2);
+
+    let speedRangeInput = $('.slidecontainer:eq(0)').children().eq(0);
+    let volumeRangeInput = $('.slidecontainer:eq(1)').children().eq(0);
+
+    // Event listener for input change
+    speedRangeInput.on('input', function () {
+        // Update the span text with the current value of the range input
+        firstSliderTxt.text($(this).val());
+    });
+
+    // Event listener for input change
+    volumeRangeInput.on('input', function () {
+        // Update the span text with the current value of the range input
+        secondSliderTxt.text($(this).val());
+    });
+
+    // Trigger the event on page load to set initial value
+    firstSliderTxt.text(speedRangeInput.val());
+    secondSliderTxt.text(volumeRangeInput.val());
+
+    $('.getNewFile button').click(function () {
+        alert('Button was clicked!');
+        collectData();
+    });
+
+    function collectData() {
+        let speedValue = speedRangeInput.val();
+        let volumeValue = volumeRangeInput.val();
+        let isNormalizaionOn = $('#normVolume').is(':checked');
+        let selectedFormat = $('.formatsBox').val();
+
+        let dataJSON = {
+            "id": fileID,
+            "speed": speedValue,
+            "volume": volumeValue,
+            "isNorm": isNormalizaionOn,
+            "format": selectedFormat
+        };
+        console.log(dataJSON);
+
+        $.ajax({
+            url: '/Home/ApplyEffects',
+            type: 'POST',
+            data: JSON.stringify(dataJSON),
+            contentType: 'application/json',
+            success: function (result) {
+                console.log(result);
+                $.ajax({
+                    url: '/Home/GetAudioVisual2',
+                    type: 'POST',
+                    data: JSON.stringify(result['id']),
+                    contentType: 'application/json',
+                    success: function (result) {
+                        let visualDiv = $('.visualRepresentation2 img');
+                        let src = `data:image/png;base64,${result['bytes']}`;
+                        visualDiv.attr('src', src);
+
+                        console.log(result);
+                    }
+                });
+
+                let audio = $('#audioFinal source');
+                let _type = result['contentType'];
+                let _src = `data:${result['contentType']};base64,${result['bytes']}`;
+                audio.attr('src', _src);
+                audio.attr('type', _type);
+                $('#audioFinal')[0].load();
+            }
+        });
+    }
+
+</script>

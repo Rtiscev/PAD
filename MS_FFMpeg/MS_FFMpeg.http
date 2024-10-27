@@ -1,0 +1,6 @@
+@MS_FFMpeg_HostAddress = http://localhost:5156
+
+GET {{MS_FFMpeg_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
